@@ -1,0 +1,17 @@
+- Os assemblies de que o presente assembly depende.
+	mscorlib
+- A versão do presente assembly.
+	1.0.0.0
+- Tipo do assembly (dll ou exe).
+	dll
+- A constituição da classe presente no assembly.
+	Dois campos do tipo int, um construtor estatico, um construtor que recebe dois inteiros e dois metodos Distance e ToString.
+- O comportamento dos métodos presentes.
+	O construtor estatico imprime na consola o codebase e a location da assembly que está a correr.
+	O construtor de instancia chama o construtor da classe object, de seguida carrega cada um dos argumentos e compara-os com zero,
+se algum for menor lança uma excepção. Caso contrario faz o set dos fields da classe.
+	O metodo Distance, carrega o field x do argumento, de seguida o field x do this, subtrai e carrega na variavel local 0.
+Depois faz o mesmo para os fields y. Depois carrega a primeira variavel local e multiplica-a por si mesma. Depois faz o mesmo para o fields y.
+Depois soma os dois valores. Depois converte este valor para float. Depois chama a função de raiz quadrada e converte para inteiro antes de retornar.
+	O metodo ToString, constroi uma string com o formato (x, y), carregando a string do formato, seguido dos dois argumentos que converte para object.
+No fim chama o metodo Format que retorna a string que o metodo vai retornar.
