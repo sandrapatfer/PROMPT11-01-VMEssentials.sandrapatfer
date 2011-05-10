@@ -1,0 +1,16 @@
+c)
+C:\SPF\prompt11\uc01\repos\PROMPT11-01-VMEssentials.sandrapatfer\src\Questao4>pe
+verify p.dll
+
+Microsoft (R) .NET Framework PE Verifier.  Version  4.0.30319.1
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+[IL]: Error: [C:\SPF\prompt11\uc01\repos\PROMPT11-01-VMEssentials.sandrapatfer\s
+rc\Questao4\p.dll : Sessao1.Ponto::Distance][offset 0x0000002F][found ref 'Syste
+m.String'][expected Int32] Unexpected type on the stack.
+1 Error(s) Verifying p.dll
+
+d)
+Distancia: 31125608
+
+O metodo executou, mas retorna um valor errado.
