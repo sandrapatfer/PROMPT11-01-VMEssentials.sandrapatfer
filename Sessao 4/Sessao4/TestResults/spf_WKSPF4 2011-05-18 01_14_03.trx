@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="f4b91e60-9cb4-4f3b-bb7d-7b704bd9d62a" name="spf@WKSPF4 2011-05-18 01:14:03" runUser="ASCORP\spf" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="9c902be1-ba22-4d4e-825f-91cd920b426b">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="spf_WKSPF4 2011-05-18 01_14_03">
+      <DeploymentItem filename="C:\SPF\prompt11\uc01\repos\PROMPT11-01-VMEssentials.sandrapatfer\Sessao 4\Sessao4\Binding\bin\Debug\Binding.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2011-05-18T01:14:03.2962923+01:00" queuing="2011-05-18T01:14:03.3586925+01:00" start="2011-05-18T01:14:03.3586925+01:00" finish="2011-05-18T01:14:03.6550930+01:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="bind2_when_member_is_required_throws_exception" storage="c:\spf\prompt11\uc01\repos\prompt11-01-vmessentials.sandrapatfer\sessao 4\sessao4\binding.tests2\bin\debug\binding.tests2.dll" id="f11e6c16-2163-7acc-ecbe-3f27e3d20827">
+      <Execution id="0e67c47b-8c00-4440-9f8a-cba580a58b54" />
+      <TestMethod codeBase="C:/SPF/prompt11/uc01/repos/PROMPT11-01-VMEssentials.sandrapatfer/Sessao 4/Sessao4/Binding.Tests2/bin/Debug/Binding.Tests2.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Binding.Tests2.BindingTests, Binding.Tests2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="bind2_when_member_is_required_throws_exception" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="f11e6c16-2163-7acc-ecbe-3f27e3d20827" executionId="0e67c47b-8c00-4440-9f8a-cba580a58b54" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="0e67c47b-8c00-4440-9f8a-cba580a58b54" testId="f11e6c16-2163-7acc-ecbe-3f27e3d20827" testName="bind2_when_member_is_required_throws_exception" computerName="WKSPF4" duration="00:00:00.0345376" startTime="2011-05-18T01:14:03.3742925+01:00" endTime="2011-05-18T01:14:03.6394929+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0e67c47b-8c00-4440-9f8a-cba580a58b54">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method Binding.Tests2.BindingTests.bind2_when_member_is_required_throws_exception did not throw expected exception Binding.RequiredMemberException.</Message>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>

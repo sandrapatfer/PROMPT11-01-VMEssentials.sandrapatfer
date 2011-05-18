@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="bd5d62d4-db4c-4a51-a7cb-af7496679200" name="spf@WKSPF4 2011-05-17 22:31:17" runUser="ASCORP\spf" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="9c902be1-ba22-4d4e-825f-91cd920b426b">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment userDeploymentRoot="C:\SPF\prompt11\uc01\repos\PROMPT11-01-VMEssentials.sandrapatfer\Sessao 4\Sessao4\TestResults" useDefaultDeploymentRoot="false" enabled="false" runDeploymentRoot="spf_WKSPF4 2011-05-17 22_31_17">
+      <DeploymentItem filename="C:\SPF\prompt11\uc01\repos\PROMPT11-01-VMEssentials.sandrapatfer\Sessao 4\Sessao4\Binding\bin\Debug\Binding.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2011-05-17T22:31:17.6274039+01:00" queuing="2011-05-17T22:31:18.4018058+01:00" start="2011-05-17T22:31:18.6514063+01:00" finish="2011-05-17T22:31:32.6578472+01:00" />
+  <ResultSummary outcome="Completed">
+    <Counters total="1" executed="1" passed="1" error="0" failed="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="can_bind_to_B" storage="c:\spf\prompt11\uc01\repos\prompt11-01-vmessentials.sandrapatfer\sessao 4\sessao4\binding.tests2\bin\debug\binding.tests2.dll" id="26571626-5997-5175-55a0-d1a5ed597e46">
+      <Execution id="dcd60277-4475-442c-888d-bedaba1e0fba" />
+      <TestMethod codeBase="C:/SPF/prompt11/uc01/repos/PROMPT11-01-VMEssentials.sandrapatfer/Sessao 4/Sessao4/Binding.Tests2/bin/Debug/Binding.Tests2.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Binding.Tests2.BindingTests, Binding.Tests2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="can_bind_to_B" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="26571626-5997-5175-55a0-d1a5ed597e46" executionId="dcd60277-4475-442c-888d-bedaba1e0fba" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="dcd60277-4475-442c-888d-bedaba1e0fba" testId="26571626-5997-5175-55a0-d1a5ed597e46" testName="can_bind_to_B" computerName="WKSPF4" duration="00:00:13.1711093" startTime="2011-05-17T22:31:18.7918065+01:00" endTime="2011-05-17T22:31:32.5798470+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dcd60277-4475-442c-888d-bedaba1e0fba">
+    </UnitTestResult>
+  </Results>
+</TestRun>

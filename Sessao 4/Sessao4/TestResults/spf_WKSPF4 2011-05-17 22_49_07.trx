@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="20541739-bccc-429f-a361-9d6c3762db9f" name="spf@WKSPF4 2011-05-17 22:49:07" runUser="ASCORP\spf" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="9c902be1-ba22-4d4e-825f-91cd920b426b">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment userDeploymentRoot="C:\SPF\prompt11\uc01\repos\PROMPT11-01-VMEssentials.sandrapatfer\Sessao 4\Sessao4\TestResults" useDefaultDeploymentRoot="false" enabled="false" runDeploymentRoot="spf_WKSPF4 2011-05-17 22_49_07">
+      <DeploymentItem filename="C:\SPF\prompt11\uc01\repos\PROMPT11-01-VMEssentials.sandrapatfer\Sessao 4\Sessao4\Binding\bin\Debug\Binding.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2011-05-17T22:49:07.3092682+01:00" queuing="2011-05-17T22:49:08.0962830+01:00" start="2011-05-17T22:49:08.2522833+01:00" finish="2011-05-17T22:49:29.9979932+01:00" />
+  <ResultSummary outcome="Error">
+    <Counters total="1" executed="1" error="0" failed="0" timeout="0" aborted="1" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+    <RunInfos>
+      <RunInfo computerName="WKSPF4" outcome="Error" timestamp="2011-05-17T22:49:29.9959931+01:00">
+        <Text>Test host process exited unexpectedly.</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="can_bind2_to_string_int_and_bool" storage="c:\spf\prompt11\uc01\repos\prompt11-01-vmessentials.sandrapatfer\sessao 4\sessao4\binding.tests2\bin\debug\binding.tests2.dll" id="c2944eda-b3b1-ae37-c806-71ac6d075d96">
+      <Execution id="e0c413e3-acaf-4be7-b594-2aceb7a6e5d3" />
+      <TestMethod codeBase="C:/SPF/prompt11/uc01/repos/PROMPT11-01-VMEssentials.sandrapatfer/Sessao 4/Sessao4/Binding.Tests2/bin/Debug/Binding.Tests2.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Binding.Tests2.BindingTests, Binding.Tests2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="can_bind2_to_string_int_and_bool" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="c2944eda-b3b1-ae37-c806-71ac6d075d96" executionId="e0c413e3-acaf-4be7-b594-2aceb7a6e5d3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="e0c413e3-acaf-4be7-b594-2aceb7a6e5d3" testId="c2944eda-b3b1-ae37-c806-71ac6d075d96" testName="can_bind2_to_string_int_and_bool" computerName="WKSPF4" duration="00:00:21.5897097" startTime="2011-05-17T22:49:08.4082835+01:00" endTime="2011-05-17T22:49:29.9979932+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Aborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e0c413e3-acaf-4be7-b594-2aceb7a6e5d3">
+    </UnitTestResult>
+  </Results>
+</TestRun>
