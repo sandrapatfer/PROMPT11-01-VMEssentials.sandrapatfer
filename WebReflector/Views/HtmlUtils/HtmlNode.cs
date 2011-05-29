@@ -6,8 +6,8 @@ using System.IO;
 
 namespace WebReflector
 {
-    public interface IHtmlView
+    public abstract class HtmlNode
     {
-        void RenderContent(TextWriter stream);
+        public abstract void RenderContent(TextWriter stream);
     }
 }

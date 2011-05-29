@@ -5,15 +5,12 @@ using System.Text;
 
 namespace WebReflector
 {
-    public class MethodView : IHtmlView
+    public class MethodView : HtmlView
     {
-        #region IHtmlView Members
-
-        public string Html
+        public override HtmlNode Body()
         {
-            get { throw new NotImplementedException(); }
+            //TODO
+            return null;
         }
-
-        #endregion
     }
 }

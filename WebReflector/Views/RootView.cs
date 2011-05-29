@@ -5,16 +5,20 @@ using System.Text;
 
 namespace WebReflector
 {
-    public class RootView : IHtmlView
+    public class RootView : HtmlView
     {
-
-        #region IHtmlView Members
-
-        public string Html
+        List<Reflector.Context> m_contextList;
+        public RootView(List<Reflector.Context> contextList)
         {
-            get { throw new NotImplementedException(); }
+            m_contextList = contextList;
         }
 
-        #endregion
+        public override HtmlNode Body()
+        {
+            return body(
+                h1("Context List"),
+                ul(m_contextList.ConvertAll(c => li(a(c.Name, c.Uri))).ToArray())
+            );
+        }
     }
 }

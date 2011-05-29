@@ -5,15 +5,24 @@ using System.Text;
 
 namespace WebReflector
 {
-    public class ContextView : IHtmlView
+    public class ContextView : HtmlView
     {
-        #region IHtmlView Members
+        Reflector.Context m_context;
 
-        public string Html
+        public ContextView(Reflector.Context context)
         {
-            get { throw new NotImplementedException(); }
+            m_context = context;
         }
 
-        #endregion
+        public override HtmlNode Body()
+        {
+            return body(
+                ul(
+                    a("Assembly list", m_context.AssemblyUri),
+                    a("Namespace list", m_context.NamespaceUri)
+                ),
+                back(m_context.ParentUri)
+            );
+        }
     }
 }

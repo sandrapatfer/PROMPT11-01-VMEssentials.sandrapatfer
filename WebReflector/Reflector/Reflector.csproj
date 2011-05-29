@@ -8,8 +8,8 @@
     <ProjectGuid>{D2A3762E-122D-4C06-AACC-91CF51D6DD27}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Reflector</RootNamespace>
-    <AssemblyName>Reflector</AssemblyName>
+    <RootNamespace>WebReflector.Reflector</RootNamespace>
+    <AssemblyName>WebReflector.Reflector</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,8 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ReflectorConfig.cs" />
+    <Compile Include="Context.cs" />
+    <Compile Include="ContextAssembly.cs" />
+    <Compile Include="ContextNamespace.cs" />
+    <Compile Include="ContextType.cs" />
+    <Compile Include="Exceptions\ReflectorException.cs" />
+    <Compile Include="Reflector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReflectorException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

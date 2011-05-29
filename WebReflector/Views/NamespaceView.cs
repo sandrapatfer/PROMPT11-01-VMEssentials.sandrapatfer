@@ -5,15 +5,18 @@ using System.Text;
 
 namespace WebReflector
 {
-    public class NamespaceView : IHtmlView
+    public class NamespaceView : HtmlView
     {
-        #region IHtmlView Members
-
-        public string Html
+        List<string> m_nspaceNames;
+        public NamespaceView(List<string> nspaceNames)
         {
-            get { throw new NotImplementedException(); }
+            m_nspaceNames = nspaceNames;
         }
 
-        #endregion
+        public override HtmlNode Body()
+        {
+            //TODO
+            return null;
+        }
     }
 }

@@ -12,9 +12,8 @@ namespace WebReflector
 
         public IHtmlView Handle(Dictionary<string, string> parameters)
         {
- //           Assembly typeAssembly = ReflectorConfig.Singleton.GetAssembly(parameters["ctx"], parameters["assemblyName"]);
-
-            return new TypeView(typeof(string));
+            // TODO remover {} dos parametros para ficar mais bonito
+            return new TypeView(Reflector.GetContext(parameters["{ctx}"]).GetNamespace(parameters["{namespace}"]).GetType(parameters["{shortName}"]));
         }
 
         #endregion

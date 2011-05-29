@@ -14,9 +14,19 @@ namespace WebReflector
     {
         public UnitTest1()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            // register templates
+            Router<IHandler>.Register("/", new RootHandler());
+            Router<IHandler>.Register("/{ctx}", new ContextHandler());
+            Router<IHandler>.Register("/{ctx}/as", new ContextAssembliesHandler());
+            Router<IHandler>.Register("/{ctx}/ns", new ContextNamespacesHandler());
+            Router<IHandler>.Register("/{ctx}/as/{assemblyName}", new AssemblyHandler());
+            Router<IHandler>.Register("/{ctx}/ns/{namespacePrefix}", new NamespaceHandler());
+            Router<IHandler>.Register("/{ctx}/ns/{namespace}/{shortName}", new TypeHandler());
+            Router<IHandler>.Register("/{ctx}/ns/{namespace}/{shortName}/m/{methodName}", new MethodHandler());
+            Router<IHandler>.Register("/{ctx}/ns/{namespace}/{shortName}/c", new ConstructorsHandler());
+            Router<IHandler>.Register("/{ctx}/ns/{namespace}/{shortName}/f/{fieldName}", new FieldHandler());
+            Router<IHandler>.Register("/{ctx}/ns/{namespace}/{shortName}/p/{propName}", new PropertyHandler());
+            Router<IHandler>.Register("/{ctx}/ns/{namespace}/{shortName}/e/{eventName}", new WebReflector.EventHandler());
         }
 
         private TestContext testContextInstance;
@@ -59,48 +69,56 @@ namespace WebReflector
         //
         #endregion
 
+        static IHtmlView HandleRequest(string uri)
+        {
+            // TODO pensar sobre os parametros, não sei se a ideia era criar sempre o dicionario
+            Dictionary<string, string> parameters;
+            var handler = Router<IHandler>.LookupHandler(uri, out parameters);
+            return handler.Handle(parameters);
+        }
+
         [TestMethod]
         public void test_response_type()
         {
-            Router r = new Router();
+            Reflector.RegisterContext("v4.0", @"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0");
 
-            IHtmlView response = r.HandleRequest("/");
+            IHtmlView response = HandleRequest("/");
             Assert.IsTrue(response is RootView, "response is RootView");
 
-            response = r.HandleRequest("/folder");
+            response = HandleRequest("/v4.0");
             Assert.IsTrue(response is ContextView, "response is ContextView");
 
-            response = r.HandleRequest("/folder/as");
+            response = HandleRequest("/v4.0/as");
             Assert.IsTrue(response is ContextAssembliesView, "response is ContextAssembliesView");
 
-            response = r.HandleRequest("/folder/ns");
+            response = HandleRequest("/v4.0/ns");
             Assert.IsTrue(response is ContextNamespacesView, "response is ContextNamespacesView");
 
-            response = r.HandleRequest("/folder/as");
+            response = HandleRequest("/v4.0/as");
             Assert.IsTrue(response is ContextAssembliesView, "response is ContextAssembliesView");
 
-            response = r.HandleRequest("/folder/as/System");
+            response = HandleRequest("/v4.0/as/System");
             Assert.IsTrue(response is AssemblyView, "response is AssemblyView");
 
-            response = r.HandleRequest("/folder/ns/System");
+            response = HandleRequest("/v4.0/ns/System");
             Assert.IsTrue(response is NamespaceView, "response is NamespaceView");
 
-            response = r.HandleRequest("/folder/ns/System/String");
+            response = HandleRequest("/v4.0/ns/System/Object");
             Assert.IsTrue(response is TypeView, "response is TypeView");
 
-            response = r.HandleRequest("/folder/ns/System/String/m/CompareTo");
+            response = HandleRequest("/v4.0/ns/System/String/m/CompareTo");
             Assert.IsTrue(response is MethodView, "response is MethodView");
 
-            response = r.HandleRequest("/folder/ns/System/String/c");
+            response = HandleRequest("/v4.0/ns/System/String/c");
             Assert.IsTrue(response is ConstructorsView, "response is ConstructorsView");
 
-            response = r.HandleRequest("/folder/ns/System/String/f/OneField");
+            response = HandleRequest("/v4.0/ns/System/String/f/OneField");
             Assert.IsTrue(response is FieldView, "response is FieldView");
-            
-            response = r.HandleRequest("/folder/ns/System/String/p/OneProp");
+
+            response = HandleRequest("/v4.0/ns/System/String/p/OneProp");
             Assert.IsTrue(response is PropertyView, "response is PropertyView");
 
-            response = r.HandleRequest("/folder/ns/System/String/e/OneEvent");
+            response = HandleRequest("/v4.0/ns/System/String/e/OneEvent");
             Assert.IsTrue(response is WebReflector.EventView, "response is EventView");
         }
     }

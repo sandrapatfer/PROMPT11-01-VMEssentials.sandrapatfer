@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
 
 namespace WebReflector
 {
-    public interface IHtmlView
+    public interface IHtmlElement
     {
-        void RenderContent(TextWriter stream);
+        void AppendChild(IHtmlElement child);
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WebReflector
 {
-    class TemplateHandler
+    class TemplateHandler<T>
     {
         private string m_template;
         private List<TemplatePart> m_templateParts = new List<TemplatePart>();
@@ -22,7 +22,8 @@ namespace WebReflector
                 uriParts.ToList().ForEach(p => { if (!string.IsNullOrEmpty(p)) m_templateParts.Add(new TemplatePart(p)); });
             }
         }
-        public IHandler Handler { get; set; }
+        //public IHandler Handler { get; set; }
+        public T Handler { get; set; }
 
         public bool MapsTemplate(string uri)
         {

@@ -5,15 +5,20 @@ using System.Text;
 
 namespace WebReflector
 {
-    public class AssemblyView : IHtmlView
+    public class AssemblyView : HtmlView
     {
-        #region IHtmlView Members
-
-        public string Html
+        List<Reflector.ContextAssembly> m_assemblies;
+        public AssemblyView(List<Reflector.ContextAssembly> assemblies)
         {
-            get { throw new NotImplementedException(); }
+            m_assemblies = assemblies;
         }
-
-        #endregion
+        
+        public override HtmlNode Body()
+        {
+            return body(
+                h1("Assembly List"),
+                ul(m_assemblies.ConvertAll(b => li(a(b.Assembly.FullName, b.Uri))).ToArray())
+                );
+        }
     }
 }

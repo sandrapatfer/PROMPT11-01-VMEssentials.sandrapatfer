@@ -53,6 +53,14 @@
       <Project>{AF7E3E94-E50B-45A9-A966-B0BC0C9FB9EB}</Project>
       <Name>Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Handlers\Handlers.csproj">
+      <Project>{9331A1B2-D0A4-4588-8273-FBF5A56FD1C1}</Project>
+      <Name>Handlers %28Handlers\Handlers%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Reflector\Reflector.csproj">
+      <Project>{D2A3762E-122D-4C06-AACC-91CF51D6DD27}</Project>
+      <Name>Reflector %28Reflector\Reflector%29</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Views\Views.csproj">
       <Project>{7AB66D69-804A-47BD-95AC-C74B6B49DCDD}</Project>
       <Name>Views %28Views\Views%29</Name>
