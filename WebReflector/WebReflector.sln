@@ -20,8 +20,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Handlers", "Handlers", "{40
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Handlers", "Handlers\Handlers.csproj", "{9331A1B2-D0A4-4588-8273-FBF5A56FD1C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exceptions", "Exceptions\Exceptions.csproj", "{EE32E29F-1103-4B56-90DB-BB61A5E572CB}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Views", "Views", "{D1F7F351-E9CD-46CD-A1C9-047C18670E0D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Views", "Views\Views.csproj", "{7AB66D69-804A-47BD-95AC-C74B6B49DCDD}"
@@ -93,16 +91,6 @@ Global
 		{9331A1B2-D0A4-4588-8273-FBF5A56FD1C1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{9331A1B2-D0A4-4588-8273-FBF5A56FD1C1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{9331A1B2-D0A4-4588-8273-FBF5A56FD1C1}.Release|x86.ActiveCfg = Release|Any CPU
-		{EE32E29F-1103-4B56-90DB-BB61A5E572CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EE32E29F-1103-4B56-90DB-BB61A5E572CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EE32E29F-1103-4B56-90DB-BB61A5E572CB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{EE32E29F-1103-4B56-90DB-BB61A5E572CB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{EE32E29F-1103-4B56-90DB-BB61A5E572CB}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{EE32E29F-1103-4B56-90DB-BB61A5E572CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EE32E29F-1103-4B56-90DB-BB61A5E572CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EE32E29F-1103-4B56-90DB-BB61A5E572CB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{EE32E29F-1103-4B56-90DB-BB61A5E572CB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{EE32E29F-1103-4B56-90DB-BB61A5E572CB}.Release|x86.ActiveCfg = Release|Any CPU
 		{7AB66D69-804A-47BD-95AC-C74B6B49DCDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7AB66D69-804A-47BD-95AC-C74B6B49DCDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AB66D69-804A-47BD-95AC-C74B6B49DCDD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

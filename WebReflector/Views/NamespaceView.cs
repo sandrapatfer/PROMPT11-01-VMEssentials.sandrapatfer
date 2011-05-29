@@ -7,16 +7,21 @@ namespace WebReflector
 {
     public class NamespaceView : HtmlView
     {
-        List<string> m_nspaceNames;
-        public NamespaceView(List<string> nspaceNames)
+        Reflector.ContextNamespace m_nspace;
+        public NamespaceView(Reflector.ContextNamespace nspace)
         {
-            m_nspaceNames = nspaceNames;
+            m_nspace = nspace;
         }
 
         public override HtmlNode Body()
         {
-            //TODO
-            return null;
+            //TODO os tipos devem estar numa arvore de namespaces
+//                ul(m_nspace.TypeTree, (nspace, typeList) => li(nspace, ul(typeList.ConvertAll(t => li(t)).ToArray())))
+
+            return body(
+                h1(string.Format("Namespace: {0}", m_nspace.Name)),
+                ul(m_nspace.Types.ConvertAll(t => li(a(t.Type.Name, t.Uri))).ToArray())
+                );
         }
     }
 }

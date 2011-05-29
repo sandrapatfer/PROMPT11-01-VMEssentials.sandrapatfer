@@ -51,7 +51,6 @@
     <Compile Include="NamespaceHandler.cs" />
     <Compile Include="PropertyHandler.cs" />
     <Compile Include="RootHandler.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeHandler.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +66,9 @@
       <Project>{7AB66D69-804A-47BD-95AC-C74B6B49DCDD}</Project>
       <Name>Views %28Views\Views%29</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

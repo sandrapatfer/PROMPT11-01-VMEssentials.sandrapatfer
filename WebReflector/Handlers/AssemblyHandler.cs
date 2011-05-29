@@ -11,8 +11,7 @@ namespace WebReflector
 
         public IHtmlView Handle(Dictionary<string, string> parameters)
         {
-            var ctx = Reflector.GetContext(parameters["{ctx}"]);
-            return new AssemblyView(ctx.GetAssemblies());
+            return new AssemblyView(Reflector.Reflector.GetContext(parameters["{ctx}"]).GetAssembly(parameters["{assemblyName}"]));
         }
 
         #endregion

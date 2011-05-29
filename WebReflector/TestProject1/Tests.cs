@@ -60,18 +60,18 @@ namespace WebReflector
         #endregion
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidPathReflectorException))]
+        [ExpectedException(typeof(Reflector.InvalidPathReflectorException))]
         public void test_register_invalid_path()
         {
-            Reflector.RegisterContext("ctx1", @"c:\XXX");
+            Reflector.Reflector.RegisterContext("ctx1", @"c:\XXX");
         }
 
 
         [TestMethod]
         public void test_register()
         {
-            Reflector.RegisterContext("v4.0", @"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0");
-            Assert.AreEqual(Reflector.GetType("v4.0", "System", "Object"), typeof(object));
+            Reflector.Reflector.RegisterContext("v4.0", @"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0");
+            Assert.AreEqual(Reflector.Reflector.GetContext("v4.0").GetNamespace("System").GetType("Object").Type, typeof(object));
         }
     }
 }

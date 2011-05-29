@@ -41,10 +41,28 @@ namespace WebReflector
         {
             return new HtmlElement("ul", list.ConvertAll(n => new HtmlTextNode(n)).Cast<HtmlNode>().ToList());
         }
+        protected HtmlNode ul<TKey, TValue>(Dictionary<TKey, TValue> dic, Func<TKey, TValue, HtmlNode> conv)
+        {
+            var prms = new List<HtmlNode>();
+            foreach (var key in dic.Keys)
+            {
+                prms.Add(conv(key, dic[key]));
+            }
+            return new HtmlElement("ul", prms);
+        }
+
         // TODO tentar converter numa função que recebe uma lista e uma função para converter cada item num htmlnode
         protected HtmlNode li(HtmlNode item)
         {
             return new HtmlElement("li", item);
+        }
+        protected HtmlNode li(string item)
+        {
+            return new HtmlElement("li", new HtmlTextNode(item));
+        }
+        protected HtmlNode li(string item, HtmlNode child)
+        {
+            return new HtmlElement("li", new HtmlTextNode(item), child);
         }
         protected HtmlNode a(string text, string uri)
         {

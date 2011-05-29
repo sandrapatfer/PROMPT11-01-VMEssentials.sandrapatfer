@@ -13,7 +13,7 @@ namespace WebReflector
         public IHtmlView Handle(Dictionary<string, string> parameters)
         {
             // TODO remover {} dos parametros para ficar mais bonito
-            return new TypeView(Reflector.GetContext(parameters["{ctx}"]).GetNamespace(parameters["{namespace}"]).GetType(parameters["{shortName}"]));
+            return new TypeView(Reflector.Reflector.GetContext(parameters["{ctx}"]).GetNamespace(parameters["{namespace}"]).GetType(parameters["{shortName}"]));
         }
 
         #endregion

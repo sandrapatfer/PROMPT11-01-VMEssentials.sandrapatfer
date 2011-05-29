@@ -11,7 +11,7 @@ namespace WebReflector
 
         public IHtmlView Handle(Dictionary<string, string> parameters)
         {
-            return new ContextNamespacesView();
+            return new ContextNamespacesView(Reflector.Reflector.GetContext(parameters["{ctx}"]).Namespaces);
         }
 
         #endregion

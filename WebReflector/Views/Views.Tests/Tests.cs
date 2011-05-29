@@ -63,7 +63,7 @@ namespace WebReflector
         [TestMethod]
         public void TestMethod1()
         {
-            var t = new TypeView(typeof(string));
+            var t = new TypeView(new Reflector.ContextType() { Type = typeof(string) });
             var sb = new StringBuilder();
             var stream = new StringWriter(sb);
             t.RenderContent(stream);

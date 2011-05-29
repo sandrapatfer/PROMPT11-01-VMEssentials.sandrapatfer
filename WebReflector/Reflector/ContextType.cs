@@ -9,5 +9,15 @@ namespace WebReflector.Reflector
     {
         public Type Type { get; set; }
 
+        public ContextNamespace Namespace { get; set; }
+
+        public string Uri
+        {
+            get
+            {
+                return string.Format(@"{0}/{1}", Namespace.Uri, Type.Name);
+            }
+        }
+
     }
 }

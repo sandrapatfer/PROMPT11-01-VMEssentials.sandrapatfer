@@ -80,7 +80,7 @@ namespace WebReflector
         [TestMethod]
         public void test_response_type()
         {
-            Reflector.RegisterContext("v4.0", @"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0");
+            Reflector.Reflector.RegisterContext("v4.0", @"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0");
 
             IHtmlView response = HandleRequest("/");
             Assert.IsTrue(response is RootView, "response is RootView");

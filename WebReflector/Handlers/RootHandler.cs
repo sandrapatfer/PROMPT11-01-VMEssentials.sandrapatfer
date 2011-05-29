@@ -11,7 +11,7 @@ namespace WebReflector
 
         public IHtmlView Handle(Dictionary<string, string> parameters)
         {
-            return new RootView(Reflector.GetContextList());
+            return new RootView(Reflector.Reflector.GetContextList());
         }
 
         #endregion

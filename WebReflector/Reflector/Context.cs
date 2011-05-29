@@ -63,6 +63,14 @@ namespace WebReflector.Reflector
             }
         }
 
+        public List<ContextNamespace> Namespaces
+        {
+            get
+            {
+                return m_nspaces;
+            }
+        }
+
         public Context(string name, string path)
         {
             m_name = name;
@@ -75,8 +83,8 @@ namespace WebReflector.Reflector
                 try
                 {
                     var assembly = Assembly.LoadFrom(dllFile);
-                    var ctxAss = new ContextAssembly() { Assembly = assembly };
-                    assembly.GetTypes().ToList().ForEach(t => { var ctx = new ContextType() { Type = t }; RegisterType(ctx); ctxAss.Types.Add(ctx); });
+                    var ctxAss = new ContextAssembly() { Assembly = assembly, Context = this };
+                    assembly.GetTypes().ToList().ForEach(t => { var type = new ContextType() { Type = t }; RegisterType(type); ctxAss.RegisterType(type); });
                     m_assemblies.Add(ctxAss);
                 }
                 catch
@@ -92,24 +100,27 @@ namespace WebReflector.Reflector
             ContextNamespace nspace = m_nspaces.Find(n => n.Name == type.Type.Namespace);
             if (nspace == null)
             {
-                nspace = new ContextNamespace() { Name = type.Type.Namespace };
+                nspace = new ContextNamespace() { Name = type.Type.Namespace, Context = this };
                 m_nspaces.Add(nspace);
             }
+            type.Namespace = nspace;
             nspace.Types.Add(type);
         }
 
-        // TODO verificar existencia!!!
-        public ContextType GetType(string nsName, string name)
+        public ContextAssembly GetAssembly(string name)
+        {
+            ContextAssembly assembly = m_assemblies.Find(a => a.Assembly.FullName == name);
+            if (assembly == null)
+                throw new AssemblyNotFoundReflectorException() { ErrorAssembly = name };
+            return assembly;
+        }
+
+        public ContextNamespace GetNamespace(string nsName)
         {
             ContextNamespace nspace = m_nspaces.Find(n => n.Name == nsName);
             if (nspace == null)
-                throw new ContextNotFoundReflectorException() {ErrorContext = nsName};
-            return nspace.GetType(name);
-        }
-
-        public List<string> GetNamespaceNames()
-        {
-            return m_nspaces.ConvertAll(n => n.Name);
+                throw new NamespaceNotFoundReflectorException() { ErrorNamespace = nsName };
+            return nspace;
         }
     }
 }

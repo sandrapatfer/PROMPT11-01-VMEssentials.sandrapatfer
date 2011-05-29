@@ -32,10 +32,5 @@ namespace WebReflector.Reflector
             else
                 throw new ContextNotFoundReflectorException() { ErrorContext = name };
         }
-
-        public static ContextType GetType(string context, string nspace, string type)
-        {
-            return m_contextList[context].GetType(nspace, type);
-        }
     }
 }

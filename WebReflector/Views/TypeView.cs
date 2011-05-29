@@ -6,8 +6,8 @@ namespace WebReflector
 {
     public class TypeView : HtmlView
     {
-        Type m_type;
-        public TypeView(Type t)
+        Reflector.ContextType m_type;
+        public TypeView(Reflector.ContextType t)
         {
             m_type = t;
         }
@@ -15,7 +15,7 @@ namespace WebReflector
         public override HtmlNode Body()
         {
             return body(
-                h1(string.Format("Type: {0}", m_type.Name))
+                h1(string.Format("Type: {0}", m_type.Type.Name))
             );
         }
     }

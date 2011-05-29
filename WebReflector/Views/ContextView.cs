@@ -18,8 +18,8 @@ namespace WebReflector
         {
             return body(
                 ul(
-                    a("Assembly list", m_context.AssemblyUri),
-                    a("Namespace list", m_context.NamespaceUri)
+                    li(a("Assembly list", m_context.AssemblyUri)),
+                    li(a("Namespace list", m_context.NamespaceUri))
                 ),
                 back(m_context.ParentUri)
             );
