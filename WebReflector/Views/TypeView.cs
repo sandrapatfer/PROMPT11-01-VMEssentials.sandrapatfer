@@ -14,8 +14,12 @@ namespace WebReflector
 
         public override HtmlNode Body()
         {
+            // TODO field type devia ser link para tipo...
             return body(
-                h1(string.Format("Type: {0}", m_type.Type.Name))
+                h1(string.Format("Type: {0}", m_type.Type.Name)),
+                h2("Fields"),
+                table(tr(th("Name"), th("Type")),
+                    m_type.Fields.ConvertAll(f => tr(td(a(f.Name, f.Uri)), td(f.TypeName))).ToArray())
             );
         }
     }

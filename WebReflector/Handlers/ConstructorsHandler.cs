@@ -11,7 +11,7 @@ namespace WebReflector
 
         public IHtmlView Handle(Dictionary<string, string> parameters)
         {
-            return new ConstructorsView();
+            return new ConstructorsView(Reflector.Reflector.GetContext(parameters["{ctx}"]).GetNamespace(parameters["{namespace}"]).GetType(parameters["{shortName}"]));
         }
 
         #endregion

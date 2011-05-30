@@ -13,6 +13,10 @@ namespace WebReflector
         {
             return new HtmlElement("h1", text);
         }
+        protected HtmlElement h2(string text)
+        {
+            return new HtmlElement("h2", text);
+        }
         protected HtmlNode body(params HtmlNode[] childs)
         {
             return new HtmlElement("body", childs);
@@ -21,13 +25,21 @@ namespace WebReflector
         {
             return new HtmlElement("table", rows);
         }
-        protected HtmlNode th(HtmlNode row)
+        protected HtmlNode table(HtmlNode th, params HtmlNode[] rows)
         {
-            return new HtmlElement("th", row);
+            return new HtmlElement("table", new HtmlNode[] { th }.Union(rows).ToArray());
+        }
+        protected HtmlNode th(string text)
+        {
+            return new HtmlElement("th", text);
         }
         protected HtmlNode tr(params HtmlNode[] cells)
         {
             return new HtmlElement("tr", cells);
+        }
+        protected HtmlNode td(string data)
+        {
+            return new HtmlElement("td", data);
         }
         protected HtmlNode td(HtmlNode data)
         {

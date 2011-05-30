@@ -28,4 +28,24 @@ namespace WebReflector.Reflector
     {
         public string ErrorNamespace { get; set; }
     }
+
+    public class MethodNotFoundReflectorException : ReflectorException
+    {
+        public string ErrorMethod { get; set; }
+    }
+
+    public class FieldNotFoundReflectorException : ReflectorException
+    {
+        public string ErrorField { get; set; }
+    }
+
+    public class PropertyNotFoundReflectorException : ReflectorException
+    {
+        public string ErrorProperty { get; set; }
+    }
+
+    public class EventNotFoundReflectorException : ReflectorException
+    {
+        public string ErrorEvent { get; set; }
+    }
 }

@@ -31,7 +31,5 @@ namespace WebReflector.Reflector
                 throw new TypeNotFoundReflectorException() { ErrorType = name };
             return type;
         }
-
-
     }
 }
