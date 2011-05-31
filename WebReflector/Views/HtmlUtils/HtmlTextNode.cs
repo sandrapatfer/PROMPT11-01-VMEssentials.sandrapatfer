@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Web;
 
 namespace WebReflector
 {
@@ -17,7 +18,7 @@ namespace WebReflector
 
         public override void RenderContent(TextWriter stream)
         {
-            stream.WriteLine(Text);
+            stream.WriteLine(HttpUtility.HtmlEncode(Text));
         }
     }
 }

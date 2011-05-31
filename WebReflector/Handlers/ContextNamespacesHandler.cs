@@ -7,13 +7,9 @@ namespace WebReflector
 {
     public class ContextNamespacesHandler : IHandler
     {
-        #region IHandler Members
-
         public IHtmlView Handle(Dictionary<string, string> parameters)
         {
-            return new ContextNamespacesView(Reflector.Reflector.GetContext(parameters["{ctx}"]).Namespaces);
+            return new ContextNamespacesView(Reflector.Reflector.GetContext(parameters["{ctx}"]).RootNamespace);
         }
-
-        #endregion
     }
 }

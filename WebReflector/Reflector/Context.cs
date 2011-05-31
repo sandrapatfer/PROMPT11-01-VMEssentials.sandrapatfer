@@ -14,15 +14,13 @@ namespace WebReflector.Reflector
         string m_name;
         string m_path;
         List<ContextAssembly> m_assemblies = new List<ContextAssembly>();
-        List<ContextNamespace> m_nspaces = new List<ContextNamespace>();
+        public List<ContextAssembly> Assemblies { get { return m_assemblies; } }
+        ContextNamespace m_nspaceTree;
 
-        public string Name
-        {
-            get
-            {
-                return m_name;
-            }
-        }
+        public string Name { get { return m_name; } }
+        public string RootUri { get { return Reflector.UriBase; } }
+        public ContextNamespace RootNamespace { get { return m_nspaceTree; } }
+
         public string Uri
         {
             get
@@ -47,34 +45,20 @@ namespace WebReflector.Reflector
             }
         }
 
-        public string ParentUri
-        {
-            get
-            {
-                return Reflector.UriBase;
-            }
-        }
 
-        public List<ContextAssembly> Assemblies
-        {
-            get
-            {
-                return m_assemblies;
-            }
-        }
-
-        public List<ContextNamespace> Namespaces
+/*        public List<ContextNamespace> Namespaces
         {
             get
             {
                 return m_nspaces;
             }
-        }
+        }*/
 
         public Context(string name, string path)
         {
             m_name = name;
             m_path = path;
+            m_nspaceTree = new ContextNamespace() { Context = this };
 
             // TODO tornar este mecanismo lazy? nota que para dar a info do nspace tenho q carregar todas as assemblies
         
@@ -92,17 +76,17 @@ namespace WebReflector.Reflector
                     // ignoring the dlls in the folder that can't be open
                 }
             }
-            // percorrer as pastas e criar um dicionario com os namespaces das assemblies
+
+            m_nspaceTree.OrderChilds();
         }
 
         void RegisterType(ContextType type)
         {
-            ContextNamespace nspace = m_nspaces.Find(n => n.Name == type.Type.Namespace);
-            if (nspace == null)
-            {
-                nspace = new ContextNamespace() { Name = type.Type.Namespace, Context = this };
-                m_nspaces.Add(nspace);
-            }
+            ContextNamespace nspace;
+            if (type.Type.Namespace != null)
+                nspace = m_nspaceTree.FindOrCreateNamespace(type.Type.Namespace.Split('.'));
+            else
+                nspace = m_nspaceTree;
             type.Namespace = nspace;
             nspace.Types.Add(type);
         }
@@ -117,7 +101,7 @@ namespace WebReflector.Reflector
 
         public ContextNamespace GetNamespace(string nsName)
         {
-            ContextNamespace nspace = m_nspaces.Find(n => n.Name == nsName);
+            ContextNamespace nspace = m_nspaceTree.Find(nsName.Split('.'));
             if (nspace == null)
                 throw new NamespaceNotFoundReflectorException() { ErrorNamespace = nsName };
             return nspace;

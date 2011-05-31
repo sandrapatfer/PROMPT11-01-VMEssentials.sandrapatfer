@@ -7,13 +7,9 @@ namespace WebReflector
 {
     public class ContextHandler : IHandler
     {
-        #region IHandler Members
-
         public IHtmlView Handle(Dictionary<string, string> parameters)
         {
             return new ContextView(Reflector.Reflector.GetContext(parameters["{ctx}"]));
         }
-
-        #endregion
     }
 }

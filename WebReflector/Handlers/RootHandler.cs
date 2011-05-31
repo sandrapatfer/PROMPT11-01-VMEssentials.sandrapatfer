@@ -7,13 +7,9 @@ namespace WebReflector
 {
     public class RootHandler : IHandler
     {
-        #region IHandler Members
-
         public IHtmlView Handle(Dictionary<string, string> parameters)
         {
             return new RootView(Reflector.Reflector.GetContextList());
         }
-
-        #endregion
     }
 }

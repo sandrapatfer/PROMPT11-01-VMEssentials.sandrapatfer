@@ -7,14 +7,10 @@ namespace WebReflector
 {
     public class MethodHandler : IHandler
     {
-        #region IHandler Members
-
         public IHtmlView Handle(Dictionary<string, string> parameters)
         {
             return new MethodView(Reflector.Reflector.GetContext(parameters["{ctx}"]).GetNamespace(parameters["{namespace}"]).
                 GetType(parameters["{shortName}"]).GetMethods(parameters["{methodName}"]));
         }
-
-        #endregion
     }
 }

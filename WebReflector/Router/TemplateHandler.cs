@@ -51,6 +51,7 @@ namespace WebReflector
 
         public Dictionary<string, string> MapUriParameters(string uri)
         {
+            // TODO remover {} dos parametros
             if (m_templateParts.Count != 0)
             {
                 var parameters = new Dictionary<string, string>();

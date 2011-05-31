@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.IO;
+using System.Web;
 
 namespace WebReflector
 {
@@ -45,6 +46,10 @@ namespace WebReflector
         {
             return new HtmlElement("td", data);
         }
+        protected HtmlNode ul(HtmlNode first, params HtmlNode[] list)
+        {
+            return new HtmlElement("ul", new HtmlNode[] { first }.Union(list).ToArray());
+        }
         protected HtmlNode ul(params HtmlNode[] list)
         {
             return new HtmlElement("ul", list);
@@ -76,22 +81,18 @@ namespace WebReflector
         {
             return new HtmlElement("li", new HtmlTextNode(item), child);
         }
+        protected HtmlNode li(HtmlNode item, HtmlNode child)
+        {
+            return new HtmlElement("li", new HtmlNode[] { item, child });
+        }
         protected HtmlNode a(string text, string uri)
         {
-            return new HtmlElement("a", new HtmlTextNode(text)) { Properties = new List<HtmlProperty> { new HtmlProperty("href", uri) } };
+            return new HtmlElement("a", new HtmlTextNode(text)) { Properties = new List<HtmlProperty> { new HtmlProperty("href", HttpUtility.UrlEncode(uri)) } };
         }
         protected HtmlNode a(IContextEntity entity)
         {
-            return new HtmlElement("a", new HtmlTextNode(entity.Name)) { Properties = new List<HtmlProperty> { new HtmlProperty("href", entity.Uri) } };
+            return new HtmlElement("a", new HtmlTextNode(entity.Name)) { Properties = new List<HtmlProperty> { new HtmlProperty("href", HttpUtility.UrlEncode(entity.Uri)) } };
         }
-
-        #region IHtmlView Members
-        public string Html
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        #endregion
 
         public abstract HtmlNode Body();
 

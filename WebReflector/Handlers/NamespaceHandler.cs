@@ -7,13 +7,9 @@ namespace WebReflector
 {
     public class NamespaceHandler : IHandler
     {
-        #region IHandler Members
-
         public IHtmlView Handle(Dictionary<string, string> parameters)
         {
             return new NamespaceView(Reflector.Reflector.GetContext(parameters["{ctx}"]).GetNamespace(parameters["{namespacePrefix}"]));
         }
-
-        #endregion
     }
 }

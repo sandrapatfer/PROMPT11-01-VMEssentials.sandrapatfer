@@ -21,7 +21,7 @@ namespace WebReflector
                     li(a("Assembly list", m_context.AssemblyUri)),
                     li(a("Namespace list", m_context.NamespaceUri))
                 ),
-                a("Root", m_context.ParentUri)
+                a("Root", m_context.RootUri)
             );
         }
     }

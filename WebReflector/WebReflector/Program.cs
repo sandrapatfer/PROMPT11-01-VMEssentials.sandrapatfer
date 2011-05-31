@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Net;
+using System.Web;
 
 namespace WebReflector
 {
@@ -13,8 +14,8 @@ namespace WebReflector
         {
             var uriBase = @"http://localhost:8080/";
             Reflector.Reflector.UriBase = uriBase;
-//            Reflector.Reflector.RegisterContext("v4.0", @"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0");
-            Reflector.Reflector.RegisterContext("v4.0", @"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0");
+            Reflector.Reflector.RegisterContext("v4.0", @"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0");
+//            Reflector.Reflector.RegisterContext("v4.0", @"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0");
             
             // register templates
             Router<IHandler>.Register("/", new RootHandler());
@@ -38,13 +39,13 @@ namespace WebReflector
                 while (true)
                 {
                     var ctx = listener.GetContext();
-                    Console.WriteLine(string.Format("Request: {0}", ctx.Request.Url));
+                    Console.WriteLine(string.Format("Request: {0}", HttpUtility.UrlDecode(ctx.Request.RawUrl)));
                     var w = new StreamWriter(ctx.Response.OutputStream);
 
                     try
                     {
                         Dictionary<string, string> parameters;
-                        var handler = Router<IHandler>.LookupHandler(ctx.Request.RawUrl.ToString(), out parameters);
+                        var handler = Router<IHandler>.LookupHandler(HttpUtility.UrlDecode(ctx.Request.RawUrl), out parameters);
 
                         handler.Handle(parameters).RenderContent(w);
                     }

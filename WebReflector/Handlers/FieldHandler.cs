@@ -7,14 +7,10 @@ namespace WebReflector
 {
     public class FieldHandler : IHandler
     {
-        #region IHandler Members
-
         public IHtmlView Handle(Dictionary<string, string> parameters)
         {
             return new FieldView(Reflector.Reflector.GetContext(parameters["{ctx}"]).GetNamespace(parameters["{namespace}"]).
                 GetType(parameters["{shortName}"]).GetField(parameters["{fieldName}"]));
         }
-
-        #endregion
     }
 }

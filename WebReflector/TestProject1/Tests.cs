@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WebReflector.Reflector;
 
 namespace WebReflector
 {
@@ -73,5 +74,27 @@ namespace WebReflector
             Reflector.Reflector.RegisterContext("v4.0", @"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0");
             Assert.AreEqual(Reflector.Reflector.GetContext("v4.0").GetNamespace("System").GetType("Object").Type, typeof(object));
         }
+
+        [TestMethod]
+        public void test_namespace_tree()
+        {
+            ContextNamespace m_nspaceTree = new ContextNamespace();
+
+            ContextNamespace nspace = m_nspaceTree.Find(".".Split('.'));
+            Assert.AreEqual(nspace.FullName, ".", "Find failed with object");
+
+            ContextNamespace nspace1 = m_nspaceTree.FindOrCreateNamespace(typeof(System.Reflection.Assembly).Namespace.Split('.'));
+            Assert.AreEqual(nspace1.FullName, "System.Reflection", "FindOrCreateNamespace failed with System.Reflection.Assembly");
+
+            ContextNamespace nspace2 = m_nspaceTree.Find(typeof(System.Reflection.Assembly).Namespace.Split('.'));
+            Assert.AreEqual(nspace2.FullName, "System.Reflection", "Find failed with System.Reflection.Assembly");
+
+            ContextNamespace nspace3 = m_nspaceTree.FindOrCreateNamespace(typeof(object).Namespace.Split('.'));
+            Assert.AreEqual(nspace3.FullName, "System", "FindOrCreateNamespace failed with object");
+
+            ContextNamespace nspace4 = m_nspaceTree.Find(typeof(object).Namespace.Split('.'));
+            Assert.AreEqual(nspace4.FullName, "System", "Find failed with object");
+
+        } 
     }
 }
