@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WebReflector.Reflector
 {
-    public class ContextNamespace
+    public class ContextNamespace : IContextEntity
     {
         public Context Context { get; set; }
         public List<ContextType> Types { get; internal set; }

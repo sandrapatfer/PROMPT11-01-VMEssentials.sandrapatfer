@@ -6,10 +6,15 @@ using System.Reflection;
 
 namespace WebReflector.Reflector
 {
-    public class ContextAssembly
+    public class ContextAssembly : IContextEntity
     {
-        public Context Context { get; set; }
-        public Assembly Assembly { get; set; }
+        Context m_context;
+        public Context Context { set { m_context = value; } }
+        Assembly m_assembly;
+        public Assembly Assembly { set { m_assembly = value; m_name = m_assembly.GetName().Name; } }
+        string m_name;
+        public string Name { get { return m_name; } }
+
         List<ContextType> m_types = new List<ContextType>();
 
         public ContextAssembly()
@@ -18,6 +23,7 @@ namespace WebReflector.Reflector
 
         public void RegisterType(ContextType type)
         {
+            type.Assembly = this;
             m_types.Add(type);
         }
 
@@ -41,8 +47,9 @@ namespace WebReflector.Reflector
         {
             get
             {
-                return string.Format(@"{0}/{1}", Context.AssemblyUri, Assembly.FullName);
+                return string.Format(@"{0}/{1}", m_context.AssemblyUri, Name);
             }
         }
+        public string PublicKey { get { return System.Text.UTF8Encoding.UTF8.GetString(m_assembly.GetName().GetPublicKey()); } }
     }
 }

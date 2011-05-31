@@ -9,7 +9,7 @@ namespace WebReflector.Reflector
 {
     // Each context is a folder with several assemblies
 
-    public class Context
+    public class Context : IContextEntity
     {
         string m_name;
         string m_path;
@@ -109,7 +109,7 @@ namespace WebReflector.Reflector
 
         public ContextAssembly GetAssembly(string name)
         {
-            ContextAssembly assembly = m_assemblies.Find(a => a.Assembly.FullName == name);
+            ContextAssembly assembly = m_assemblies.Find(a => a.Name == name);
             if (assembly == null)
                 throw new AssemblyNotFoundReflectorException() { ErrorAssembly = name };
             return assembly;

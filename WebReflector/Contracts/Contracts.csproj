@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IContextEntity.cs" />
     <Compile Include="IHandler.cs" />
     <Compile Include="IHtmlView.cs" />
     <Compile Include="IHtmlElement.cs" />

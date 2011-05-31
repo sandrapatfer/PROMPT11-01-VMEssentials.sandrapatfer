@@ -17,8 +17,8 @@ namespace WebReflector
         {
             return body(
                 h1("Assembly"),
-                ul(li(string.Format("Friendly name: {0}", m_assembly.Assembly.FullName)),
-                   li(string.Format("Public key: {0}", m_assembly.Assembly.FullName))),
+                ul(li(string.Format("Friendly name: {0}", m_assembly.Name)),
+                   li(string.Format("Public key: {0}", m_assembly.PublicKey))),
                 ul(m_assembly.TypesByNamespace, (nspace, typeList) => li(nspace, ul(typeList.ConvertAll(t => li(t)).ToArray())))
                 );
         }

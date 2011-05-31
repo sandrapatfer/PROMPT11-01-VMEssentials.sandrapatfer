@@ -80,11 +80,9 @@ namespace WebReflector
         {
             return new HtmlElement("a", new HtmlTextNode(text)) { Properties = new List<HtmlProperty> { new HtmlProperty("href", uri) } };
         }
-        protected HtmlNode back(string parentUri)
+        protected HtmlNode a(IContextEntity entity)
         {
-            //TODO o texto devia ser dependente do no, como?
-            // podia ser generico em T, em q T é uma classe com uma prop marcada com um attributo ParentUri
-            return a("Parent node", parentUri);
+            return new HtmlElement("a", new HtmlTextNode(entity.Name)) { Properties = new List<HtmlProperty> { new HtmlProperty("href", entity.Uri) } };
         }
 
         #region IHtmlView Members
@@ -94,17 +92,6 @@ namespace WebReflector
         }
 
         #endregion
-
-/*        public XmlDocument DumpContent()
-        {
-            var doc = new XmlDocument();
-            var body = doc.CreateElement("body");
-            body.
-            body.AppendChilds(m_childs);
-            m_childs.ForEach(n => body.AppendChild(n.ToXmlNode()));
-            doc.AppendChild(body);
-            return doc;
-        }*/
 
         public abstract HtmlNode Body();
 

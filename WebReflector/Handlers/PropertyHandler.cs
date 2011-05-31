@@ -12,7 +12,7 @@ namespace WebReflector
         public IHtmlView Handle(Dictionary<string, string> parameters)
         {
             return new PropertyView(Reflector.Reflector.GetContext(parameters["{ctx}"]).GetNamespace(parameters["{namespace}"]).
-                GetType(parameters["{shortName}"]).GetProperty(parameters["propName"]));
+                GetType(parameters["{shortName}"]).GetProperty(parameters["{propName}"]));
         }
 
         #endregion

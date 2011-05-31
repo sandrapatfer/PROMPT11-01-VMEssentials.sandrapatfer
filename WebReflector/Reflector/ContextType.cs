@@ -40,6 +40,14 @@ namespace WebReflector.Reflector
                 return m_constructors;
             }
         }
+        List<ContextTypeMethod> m_methods = null;
+        public List<ContextTypeMethod> Methods
+        {
+            get
+            {
+                return m_methods;
+            }
+        }
 
         Type m_type;
         public Type Type
@@ -55,16 +63,25 @@ namespace WebReflector.Reflector
                 InitList(m_type.GetProperties().ToList(), ref m_properties, p => new ContextTypeProperty() { Property = p, Type = this });
                 InitList(m_type.GetEvents().ToList(), ref m_events, e => new ContextTypeEvent() { Event = e, Type = this });
                 InitList(m_type.GetConstructors().ToList(), ref m_constructors, c => new ContextTypeConstructor() { Constructor = c, Type = this });
+                InitList(m_type.GetMethods().ToList(), ref m_methods, m => new ContextTypeMethod() { Method = m, Type = this });
             }
         }
 
         public ContextNamespace Namespace { get; set; }
+        public ContextAssembly Assembly { get; set; }
 
         public string Uri
         {
             get
             {
                 return string.Format(@"{0}/{1}", Namespace.Uri, Type.Name);
+            }
+        }
+        public string ConstructorsUri
+        {
+            get
+            {
+                return string.Format(@"{0}/c", Uri);
             }
         }
 
@@ -74,6 +91,14 @@ namespace WebReflector.Reflector
             {
                 newList = typeList.ToList().ConvertAll(conv);
             }
+        }
+
+        public List<ContextTypeMethod> GetMethods(string methodName)
+        {
+            var methods = Methods.FindAll(f => f.Name == methodName);
+            if (methods == null || methods.Count == 0)
+                throw new MethodNotFoundReflectorException() { ErrorMethod = methodName };
+            return methods;
         }
 
         public ContextTypeField GetField(string fieldName)
