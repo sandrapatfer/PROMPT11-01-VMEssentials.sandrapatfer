@@ -77,7 +77,9 @@ namespace WebReflector.Reflector
                 }
             }
 
+            // do the ordering of lists after the full load of types
             m_nspaceTree.OrderChilds();
+            m_assemblies.OrderBy(a => a.Name);
         }
 
         void RegisterType(ContextType type)

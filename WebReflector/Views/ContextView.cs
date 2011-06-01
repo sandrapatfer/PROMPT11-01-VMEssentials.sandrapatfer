@@ -17,11 +17,12 @@ namespace WebReflector
         public override HtmlNode Body()
         {
             return body(
+                h1(string.Format("Context: {0}", m_context.Name)),
                 ul(
                     li(a("Assembly list", m_context.AssemblyUri)),
-                    li(a("Namespace list", m_context.NamespaceUri))
-                ),
-                a("Root", m_context.RootUri)
+                    li(a("Namespace list", m_context.NamespaceUri)),
+                    li(a("Back to context list", m_context.RootUri))
+                )
             );
         }
     }

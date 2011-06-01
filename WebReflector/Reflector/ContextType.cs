@@ -13,6 +13,8 @@ namespace WebReflector.Reflector
         {
             get
             {
+                if (m_fields == null)
+                    InitList(Type.GetFields().ToList(), ref m_fields, f => new ContextTypeField() { Field = f, Type = this });
                 return m_fields;
             }
         }
@@ -21,6 +23,8 @@ namespace WebReflector.Reflector
         {
             get
             {
+                if (m_properties == null)
+                    InitList(Type.GetProperties().ToList(), ref m_properties, p => new ContextTypeProperty() { Property = p, Type = this });
                 return m_properties;
             }
         }
@@ -29,6 +33,8 @@ namespace WebReflector.Reflector
         {
             get
             {
+                if (m_events == null)
+                    InitList(Type.GetEvents().ToList(), ref m_events, e => new ContextTypeEvent() { Event = e, Type = this });
                 return m_events;
             }
         }
@@ -37,6 +43,8 @@ namespace WebReflector.Reflector
         {
             get
             {
+                if (m_constructors == null)
+                    InitList(Type.GetConstructors().ToList(), ref m_constructors, c => new ContextTypeConstructor() { Constructor = c, Type = this });
                 return m_constructors;
             }
         }
@@ -45,27 +53,13 @@ namespace WebReflector.Reflector
         {
             get
             {
+                if (m_methods == null)
+                    InitList(Type.GetMethods().ToList(), ref m_methods, m => new ContextTypeMethod() { Method = m, Type = this });
                 return m_methods;
             }
         }
 
-        Type m_type;
-        public Type Type
-        {
-            get
-            {
-                return m_type;
-            }
-            set
-            {
-                m_type = value;
-                InitList(m_type.GetFields().ToList(), ref m_fields, f => new ContextTypeField() { Field = f, Type = this });
-                InitList(m_type.GetProperties().ToList(), ref m_properties, p => new ContextTypeProperty() { Property = p, Type = this });
-                InitList(m_type.GetEvents().ToList(), ref m_events, e => new ContextTypeEvent() { Event = e, Type = this });
-                InitList(m_type.GetConstructors().ToList(), ref m_constructors, c => new ContextTypeConstructor() { Constructor = c, Type = this });
-                InitList(m_type.GetMethods().ToList(), ref m_methods, m => new ContextTypeMethod() { Method = m, Type = this });
-            }
-        }
+        public Type Type { get; set; }
 
         public ContextNamespace Namespace { get; set; }
         public ContextAssembly Assembly { get; set; }

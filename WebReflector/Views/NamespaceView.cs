@@ -15,12 +15,16 @@ namespace WebReflector
 
         public override HtmlNode Body()
         {
-            //TODO os tipos devem estar numa arvore de namespaces
-//                ul(m_nspace.TypeTree, (nspace, typeList) => li(nspace, ul(typeList.ConvertAll(t => li(t)).ToArray())))
-
             return body(
-                h1(string.Format("Namespace: {0}", m_nspace.Name)),
-                ul(m_nspace.Types.ConvertAll(t => li(a(t.Type.Name, t.Uri))).ToArray())
+                h1(string.Format("Namespace: {0}", m_nspace.IsRoot? m_nspace.FriendlyName : m_nspace.FullName)),
+                m_nspace.IsRoot? 
+                li("Parent Namespace:") :
+                    li("Parent Namespace: ", a(m_nspace.ParentNamespace.FriendlyName, m_nspace.ParentNamespace.Uri)),
+                li("Namespace List",
+                    ul(m_nspace.ChildNamespaces.ConvertAll(n => li(a(n))).ToArray())),
+                li("Type List",
+                    ul(m_nspace.Types.ConvertAll(t => li(a(t.Type.Name, t.Uri))).ToArray())),
+                li(a("Back to List of Namespaces", m_nspace.Context.NamespaceUri))
                 );
         }
     }

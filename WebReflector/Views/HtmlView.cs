@@ -58,7 +58,7 @@ namespace WebReflector
         {
             return new HtmlElement("ul", list.ConvertAll(n => new HtmlTextNode(n)).Cast<HtmlNode>().ToList());
         }
-        protected HtmlNode ul<TKey, TValue>(Dictionary<TKey, TValue> dic, Func<TKey, TValue, HtmlNode> conv)
+        protected HtmlNode ul<TKey, TValue>(SortedDictionary<TKey, TValue> dic, Func<TKey, TValue, HtmlNode> conv)
         {
             var prms = new List<HtmlNode>();
             foreach (var key in dic.Keys)

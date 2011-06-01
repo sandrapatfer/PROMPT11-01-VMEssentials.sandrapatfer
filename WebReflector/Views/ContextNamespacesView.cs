@@ -16,14 +16,11 @@ namespace WebReflector
         public override HtmlNode Body()
         {
             return body(
-                h1("Namespace List"),
-                ul(li(a("Root", m_nspaceTree.Uri)),
-                   m_nspaceTree.ChildNamespaces.ConvertAll(n => li(n)).ToArray())
-
-/*                   m_nspaces.ConvertAll(n => 
-                       {
-                           if (
-                       li(a(n.Name, n.Uri))).ToArray())*/
+                h1(string.Format("Context: {0}", m_nspaceTree.Context.Name)),
+                li("Namespace List",
+                    ul(li(a(m_nspaceTree.FriendlyName, m_nspaceTree.Uri)),
+                       m_nspaceTree.ChildNamespaces.ConvertAll(n => li(n)).ToArray())),
+                li(a("Back to Context", m_nspaceTree.Context.Uri))
                 );
         }
 

@@ -27,11 +27,11 @@ namespace WebReflector.Reflector
             m_types.Add(type);
         }
 
-        public Dictionary<string, List<string>> TypesByNamespace
+        public SortedDictionary<string, List<string>> TypesByNamespace
         {
             get
             {
-                var dic = new Dictionary<string, List<string>>();
+                var dic = new SortedDictionary<string, List<string>>();
                 m_types.ForEach(t =>
                 {
                     if (dic.ContainsKey(t.Namespace.Name))

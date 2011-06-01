@@ -18,10 +18,10 @@ namespace WebReflector
         public override HtmlNode Body()
         {
             return body(
-                h1("Assembly List"),
-                ul(m_assemblies.ConvertAll(b => li(a(b))).ToArray()),
-                a("Context", m_context.Uri)
-                );
+                h1(string.Format("Context: {0}", m_context.Name)),
+                li("Assembly List", ul(m_assemblies.ConvertAll(b => li(a(b))).ToArray())),
+                li(a("Back to Context", m_context.Uri))
+            );
         }
     }
 }

@@ -9,17 +9,17 @@ namespace WebReflector.Reflector
     {
         public Context Context { get; set; }
         public List<ContextNamespace> ChildNamespaces { get; internal set; }
-        ContextNamespace m_parentNamespace;
+        public ContextNamespace ParentNamespace { get; internal set; }
         public List<ContextType> Types { get; internal set; }
         public string Name { get; set; }
-        public bool IsRoot { get { return m_parentNamespace == null; } }
+        public bool IsRoot { get { return ParentNamespace == null; } }
 
         public ContextNamespace()
         {
             Types = new List<ContextType>();
             ChildNamespaces = new List<ContextNamespace>();
             Name = ".";
-            m_parentNamespace = null;
+            ParentNamespace = null;
         }
         public ContextNamespace(string name)
             : this()
@@ -41,13 +41,23 @@ namespace WebReflector.Reflector
         {
             get
             {
-                if (m_parentNamespace != null)
-                    if (m_parentNamespace.IsRoot)
+                if (ParentNamespace != null)
+                    if (ParentNamespace.IsRoot)
                         return Name;
                     else
-                        return string.Format(@"{0}.{1}", m_parentNamespace.FullName, Name);
+                        return string.Format(@"{0}.{1}", ParentNamespace.FullName, Name);
                 else
                     return string.Empty;
+            }
+        }
+        public string FriendlyName
+        {
+            get
+            {
+                if (IsRoot)
+                    return "Root";
+                else
+                    return Name;
             }
         }
 
@@ -60,7 +70,7 @@ namespace WebReflector.Reflector
                 ContextNamespace child = ChildNamespaces.Find(c => c.Name == name[0]);
                 if (child == null)
                 {
-                    child = new ContextNamespace(name[0]) { m_parentNamespace = this, Context = Context };
+                    child = new ContextNamespace(name[0]) { ParentNamespace = this, Context = Context };
                     ChildNamespaces.Add(child);
                 }
                 if (name.Count() > 1)
@@ -74,6 +84,8 @@ namespace WebReflector.Reflector
         {
             if (name.Count() == 0)
                 return null;
+            else if (string.IsNullOrEmpty(name[0]) && IsRoot)
+                return this;
             else
             {
                 ContextNamespace child = ChildNamespaces.Find(c => c.Name == name[0]);
@@ -87,7 +99,9 @@ namespace WebReflector.Reflector
         public void OrderChilds()
         {
             ChildNamespaces.ForEach(n => n.OrderChilds());
-            ChildNamespaces = ChildNamespaces.OrderBy(n => n.Name).ToList();
+            ChildNamespaces.OrderBy(n => n.Name);
+
+            Types.OrderBy(t => t.Type.Name);
         }
 
         public ContextType GetType(string name)

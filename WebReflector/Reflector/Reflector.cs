@@ -11,7 +11,7 @@ namespace WebReflector.Reflector
     {
         static Dictionary<string, Context> m_contextList = new Dictionary<string, Context>();
 
-        public static string UriBase { get; set; }
+        public static string UriBase { get { return ""; } set { } }
 
         public static void RegisterContext(string context, string path)
         {
