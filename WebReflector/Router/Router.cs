@@ -5,27 +5,34 @@ using System.Text;
 
 namespace WebReflector
 {
-    public sealed class Router<T>
+    public class Router<H> : IRouter<H>
     {
-        static List<TemplateHandler<T>> m_handlers = new List<TemplateHandler<T>>();
+        class TemplateHandler<TH>
+        {
+            public IRoutingTemplate Template { get; set; }
+            public TH Handler { get; set; }
+        }
+        List<TemplateHandler<H>> m_templates = new List<TemplateHandler<H>>();
 
         public Router()
         {
         }
 
-        public static T LookupHandler(string uri, out Dictionary<string, string> parameters)
+        public H LookupHandler(string uri, out Dictionary<string, string> parameters)
         {
             // identify handler based on uri
-            var tHandler = m_handlers.Find(t => t.MapsTemplate(uri));
+            Dictionary<string, string> auxParameters = null;
+            var tHandler = m_templates.Find(t => t.Template.MapsTemplate(uri, out auxParameters));
             if (tHandler == null)
                 throw new HandlerNotFoundForUriException() { Uri = uri };
-            parameters = tHandler.MapUriParameters(uri);
+
+            parameters = auxParameters;
             return tHandler.Handler;
         }
 
-        public static void Register(string uri, T handler)
+        public void Register(IRoutingTemplate template, H handler)
         {
-            m_handlers.Add(new TemplateHandler<T>() { Template = uri, Handler = handler });
+            m_templates.Add(new TemplateHandler<H>() { Template = template, Handler = handler });
         }
     }
 }

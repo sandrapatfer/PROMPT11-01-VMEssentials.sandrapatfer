@@ -9,7 +9,7 @@ namespace WebReflector
     {
         public IHtmlView Handle(Dictionary<string, string> parameters)
         {
-            return new AssemblyView(Reflector.Reflector.GetContext(parameters["{ctx}"]).GetAssembly(parameters["{assemblyName}"]));
+            return new AssemblyView(Reflector.Reflector.GetContext(parameters[Utils.ContextTemplatePart]).GetAssembly(parameters["{assemblyName}"]));
         }
     }
 }

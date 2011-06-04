@@ -42,7 +42,7 @@
   <ItemGroup>
     <Compile Include="HandlerNotFoundForUriException.cs" />
     <Compile Include="Router.cs" />
-    <Compile Include="TemplateHandler.cs" />
+    <Compile Include="RoutingTemplate.cs" />
     <Compile Include="UriParsingException.cs" />
   </ItemGroup>
   <ItemGroup>

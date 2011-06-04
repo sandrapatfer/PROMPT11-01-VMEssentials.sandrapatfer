@@ -10,26 +10,57 @@ namespace WebReflector
 {
     class Program
     {
+        static IRouter<IHandler> ConfigHandlerRouter()
+        {
+            // configure templates
+            var rootTemplate = new RoutingTemplate("/");
+            var contextTemplate = new RoutingTemplate("/{ctx}");
+            var ctxAssembliesTemplate = new RoutingTemplate("/{ctx}/as");
+            var ctxNamespacesTemplate = new RoutingTemplate("/{ctx}/ns");
+            var assemblyTemplate = new RoutingTemplate("/{ctx}/as/{assemblyName}");
+            var namespaceTemplate = new RoutingTemplate("/{ctx}/ns/{namespacePrefix}");
+            var typeTemplate = new RoutingTemplate("/{ctx}/ns/{namespace}/{shortName}");
+            var typeMethodTemplate = new RoutingTemplate("/{ctx}/ns/{namespace}/{shortName}/m/{methodName}");
+            var typeConstructorsTemplate = new RoutingTemplate("/{ctx}/ns/{namespace}/{shortName}/c");
+            var typeFieldTemplate = new RoutingTemplate("/{ctx}/ns/{namespace}/{shortName}/f/{fieldName}");
+            var typePropertyTemplate = new RoutingTemplate("/{ctx}/ns/{namespace}/{shortName}/p/{propName}");
+            var typeEventTemplate = new RoutingTemplate("/{ctx}/ns/{namespace}/{shortName}/e/{eventName}");
+
+            // register templates to be mapped to uri on reflection context objects
+            ctxAssembliesTemplate.Register(typeof(Reflector.Context), "ContextAssembliesUri");
+            ctxNamespacesTemplate.Register(typeof(Reflector.Context), "ContextNamespacesUri");
+            typeMethodTemplate.Register(typeof(Reflector.ContextTypeMethod), "MethodUri");
+            typeConstructorsTemplate.Register(typeof(Reflector.ContextType), "ConstructorsUri");
+            typeFieldTemplate.Register(typeof(Reflector.ContextTypeField), "FieldUri");
+            typePropertyTemplate.Register(typeof(Reflector.ContextTypeProperty), "PropertyUri");
+            typeEventTemplate.Register(typeof(Reflector.ContextTypeEvent), "EventUri");
+
+            // register templates to be mapped to handlers on requests
+            var handlerRouter = new Router<IHandler>();
+            handlerRouter.Register(rootTemplate, new RootHandler());
+            handlerRouter.Register(contextTemplate, new ContextHandler());
+            handlerRouter.Register(ctxAssembliesTemplate, new ContextAssembliesHandler());
+            handlerRouter.Register(ctxNamespacesTemplate, new ContextNamespacesHandler());
+            handlerRouter.Register(assemblyTemplate, new AssemblyHandler());
+            handlerRouter.Register(namespaceTemplate, new NamespaceHandler());
+            handlerRouter.Register(typeTemplate, new TypeHandler());
+            handlerRouter.Register(typeMethodTemplate, new MethodHandler());
+            handlerRouter.Register(typeConstructorsTemplate, new ConstructorsHandler());
+            handlerRouter.Register(typeFieldTemplate, new FieldHandler());
+            handlerRouter.Register(typePropertyTemplate, new PropertyHandler());
+            handlerRouter.Register(typeEventTemplate, new WebReflector.EventHandler());
+
+            return handlerRouter;
+        }
+
         static void Main(string[] args)
         {
             var uriBase = @"http://localhost:8080/";
             Reflector.Reflector.UriBase = uriBase;
             //Reflector.Reflector.RegisterContext("v4.0", @"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0");
             Reflector.Reflector.RegisterContext("v4.0", @"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0");
-            
-            // register templates
-            Router<IHandler>.Register("/", new RootHandler());
-            Router<IHandler>.Register("/{ctx}", new ContextHandler());
-            Router<IHandler>.Register("/{ctx}/as", new ContextAssembliesHandler());
-            Router<IHandler>.Register("/{ctx}/ns", new ContextNamespacesHandler());
-            Router<IHandler>.Register("/{ctx}/as/{assemblyName}", new AssemblyHandler());
-            Router<IHandler>.Register("/{ctx}/ns/{namespacePrefix}", new NamespaceHandler());
-            Router<IHandler>.Register("/{ctx}/ns/{namespace}/{shortName}", new TypeHandler());
-            Router<IHandler>.Register("/{ctx}/ns/{namespace}/{shortName}/m/{methodName}", new MethodHandler());
-            Router<IHandler>.Register("/{ctx}/ns/{namespace}/{shortName}/c", new ConstructorsHandler());
-            Router<IHandler>.Register("/{ctx}/ns/{namespace}/{shortName}/f/{fieldName}", new FieldHandler());
-            Router<IHandler>.Register("/{ctx}/ns/{namespace}/{shortName}/p/{propName}", new PropertyHandler());
-            Router<IHandler>.Register("/{ctx}/ns/{namespace}/{shortName}/e/{eventName}", new WebReflector.EventHandler());
+
+            var handlerRouter = ConfigHandlerRouter();
 
             using (var listener = new HttpListener())
             {
@@ -45,7 +76,7 @@ namespace WebReflector
                     try
                     {
                         Dictionary<string, string> parameters;
-                        var handler = Router<IHandler>.LookupHandler(HttpUtility.UrlDecode(ctx.Request.RawUrl), out parameters);
+                        var handler = handlerRouter.LookupHandler(HttpUtility.UrlDecode(ctx.Request.RawUrl), out parameters);
 
                         handler.Handle(parameters).RenderContent(w);
                     }

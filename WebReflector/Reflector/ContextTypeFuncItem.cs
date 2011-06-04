@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using WebReflector.Attributes;
 
 namespace WebReflector.Reflector
 {
@@ -43,11 +44,15 @@ namespace WebReflector.Reflector
                 return Method.Name;
             }
         }
+
+        [TemplateAttribute(Name = "MethodUri")]
+        public static IRoutingTemplate MethodUriTemplate { get; set; }
+
         public override string Uri
         {
             get
             {
-                return string.Format(@"{0}/m/{1}", Type.Uri, Name);
+                return string.Format(MethodUriTemplate.FormatString, Type.Namespace.Context.Name, Type.Namespace.FullName, Type.Name, Name);
             }
         }
 

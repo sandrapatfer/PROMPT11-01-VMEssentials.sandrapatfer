@@ -14,19 +14,6 @@ namespace WebReflector
     {
         public UnitTest1()
         {
-            // register templates
-            Router<IHandler>.Register("/", new RootHandler());
-            Router<IHandler>.Register("/{ctx}", new ContextHandler());
-            Router<IHandler>.Register("/{ctx}/as", new ContextAssembliesHandler());
-            Router<IHandler>.Register("/{ctx}/ns", new ContextNamespacesHandler());
-            Router<IHandler>.Register("/{ctx}/as/{assemblyName}", new AssemblyHandler());
-            Router<IHandler>.Register("/{ctx}/ns/{namespacePrefix}", new NamespaceHandler());
-            Router<IHandler>.Register("/{ctx}/ns/{namespace}/{shortName}", new TypeHandler());
-            Router<IHandler>.Register("/{ctx}/ns/{namespace}/{shortName}/m/{methodName}", new MethodHandler());
-            Router<IHandler>.Register("/{ctx}/ns/{namespace}/{shortName}/c", new ConstructorsHandler());
-            Router<IHandler>.Register("/{ctx}/ns/{namespace}/{shortName}/f/{fieldName}", new FieldHandler());
-            Router<IHandler>.Register("/{ctx}/ns/{namespace}/{shortName}/p/{propName}", new PropertyHandler());
-            Router<IHandler>.Register("/{ctx}/ns/{namespace}/{shortName}/e/{eventName}", new WebReflector.EventHandler());
         }
 
         private TestContext testContextInstance;
@@ -69,18 +56,53 @@ namespace WebReflector
         //
         #endregion
 
+        static Router<IHandler> ConfigHandler()
+        {
+            // register templates
+            var rootTemplate = new RoutingTemplate("/");
+            var contextTemplate = new RoutingTemplate("/{ctx}");
+            var ctxAssembliesTemplate = new RoutingTemplate("/{ctx}/as");
+            var ctxNamespacesTemplate = new RoutingTemplate("/{ctx}/ns");
+            var assemblyTemplate = new RoutingTemplate("/{ctx}/as/{assemblyName}");
+            var namespaceTemplate = new RoutingTemplate("/{ctx}/ns/{namespacePrefix}");
+            var typeTemplate = new RoutingTemplate("/{ctx}/ns/{namespace}/{shortName}");
+            var typeMethodTemplate = new RoutingTemplate("/{ctx}/ns/{namespace}/{shortName}/m/{methodName}");
+            var typeConstructorsTemplate = new RoutingTemplate("/{ctx}/ns/{namespace}/{shortName}/c");
+            var typeFieldTemplate = new RoutingTemplate("/{ctx}/ns/{namespace}/{shortName}/f/{fieldName}");
+            var typePropertyTemplate = new RoutingTemplate("/{ctx}/ns/{namespace}/{shortName}/p/{propName}");
+            var typeEventTemplate = new RoutingTemplate("/{ctx}/ns/{namespace}/{shortName}/e/{eventName}");
+
+            // register templates to be mapped to handlers on requests
+            var handlerRouter = new Router<IHandler>();
+            handlerRouter.Register(rootTemplate, new RootHandler());
+            handlerRouter.Register(contextTemplate, new ContextHandler());
+            handlerRouter.Register(ctxAssembliesTemplate, new ContextAssembliesHandler());
+            handlerRouter.Register(ctxNamespacesTemplate, new ContextNamespacesHandler());
+            handlerRouter.Register(assemblyTemplate, new AssemblyHandler());
+            handlerRouter.Register(namespaceTemplate, new NamespaceHandler());
+            handlerRouter.Register(typeTemplate, new TypeHandler());
+            handlerRouter.Register(typeMethodTemplate, new MethodHandler());
+            handlerRouter.Register(typeConstructorsTemplate, new ConstructorsHandler());
+            handlerRouter.Register(typeFieldTemplate, new FieldHandler());
+            handlerRouter.Register(typePropertyTemplate, new PropertyHandler());
+            handlerRouter.Register(typeEventTemplate, new WebReflector.EventHandler());
+
+            return handlerRouter;
+        }
+
         static IHtmlView HandleRequest(string uri)
         {
-            // TODO pensar sobre os parametros, não sei se a ideia era criar sempre o dicionario
+            var handlerRouter = ConfigHandler();
             Dictionary<string, string> parameters;
-            var handler = Router<IHandler>.LookupHandler(uri, out parameters);
+            var handler = handlerRouter.LookupHandler(uri, out parameters);
             return handler.Handle(parameters);
         }
 
         [TestMethod]
         public void test_response_type()
         {
-            Reflector.Reflector.RegisterContext("v4.0", @"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0");
+//            Reflector.Reflector.RegisterContext("v4.0", @"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0");
+            Reflector.Reflector.RegisterContext("v4.0", @"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0");
 
             IHtmlView response = HandleRequest("/");
             Assert.IsTrue(response is RootView, "response is RootView");
@@ -112,14 +134,22 @@ namespace WebReflector
             response = HandleRequest("/v4.0/ns/System/String/c");
             Assert.IsTrue(response is ConstructorsView, "response is ConstructorsView");
 
-            response = HandleRequest("/v4.0/ns/System/String/f/OneField");
+            response = HandleRequest("/v4.0/ns/System/String/f/Empty");
             Assert.IsTrue(response is FieldView, "response is FieldView");
 
-            response = HandleRequest("/v4.0/ns/System/String/p/OneProp");
+            response = HandleRequest("/v4.0/ns/System/Array/p/Length");
             Assert.IsTrue(response is PropertyView, "response is PropertyView");
 
-            response = HandleRequest("/v4.0/ns/System/String/e/OneEvent");
+            response = HandleRequest("/v4.0/ns/System.Windows.Forms/Form/e/Activated");
             Assert.IsTrue(response is WebReflector.EventView, "response is EventView");
+        }
+
+        [TestMethod]
+        public void test_context_template_register()
+        {
+            var ctxAssembliesTemplate = new RoutingTemplate("/{ctx}/as");
+            ctxAssembliesTemplate.Register(typeof(Reflector.Context), "ContextAssembliesUri");
+            Assert.AreEqual(ctxAssembliesTemplate, Reflector.Context.AssemblyUriTemplate);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Reflection;
+using WebReflector.Attributes;
 
 namespace WebReflector.Reflector
 {
@@ -25,34 +26,31 @@ namespace WebReflector.Reflector
         {
             get
             {
-                return string.Format(@"{0}{1}", Reflector.UriBase, m_name);
+                return string.Format(@"{0}", m_name);
             }
         }
+
+        [TemplateAttribute(Name = "ContextAssembliesUri")]
+        public static IRoutingTemplate AssemblyUriTemplate { get; set; }
 
         public string AssemblyUri
         {
             get
             {
-                return string.Format(@"{0}{1}/as", Reflector.UriBase, m_name);
+                return string.Format(AssemblyUriTemplate.FormatString, m_name);
             }
         }
+
+        [TemplateAttribute(Name = "ContextNamespacesUri")]
+        public static IRoutingTemplate NamespaceUriTemplate { get; set; }
 
         public string NamespaceUri
         {
             get
             {
-                return string.Format(@"{0}{1}/ns", Reflector.UriBase, m_name);
+                return string.Format(NamespaceUriTemplate.FormatString, m_name);
             }
         }
-
-
-/*        public List<ContextNamespace> Namespaces
-        {
-            get
-            {
-                return m_nspaces;
-            }
-        }*/
 
         public Context(string name, string path)
         {

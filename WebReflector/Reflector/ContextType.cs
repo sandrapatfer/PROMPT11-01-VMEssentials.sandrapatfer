@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using WebReflector.Attributes;
 
 namespace WebReflector.Reflector
 {
@@ -86,6 +87,10 @@ namespace WebReflector.Reflector
         }
 
         public string Name { get { return m_type.Name; } }
+
+        //[TemplateAttribute(Name = "")]
+        //public static IRoutingTemplate TypeUriTemplate { get; set; }
+
         public string Uri
         {
             get
@@ -93,11 +98,15 @@ namespace WebReflector.Reflector
                 return string.Format(@"{0}/{1}", Namespace.Uri, m_type.Name);
             }
         }
+
+        [TemplateAttribute(Name = "ConstructorsUri")]
+        public static IRoutingTemplate ConstructorsUriTemplate { get; set; }
+
         public string ConstructorsUri
         {
             get
             {
-                return string.Format(@"{0}/c", Uri);
+                return string.Format(ConstructorsUriTemplate.FormatString, Namespace.Context.Name, Namespace.FullName, Name);
             }
         }
 
@@ -123,7 +132,7 @@ namespace WebReflector.Reflector
 
         public ContextTypeProperty GetProperty(string propertyName)
         {
-            var property = m_properties.Find(p => p.Name == propertyName);
+            var property = Properties.Find(p => p.Name == propertyName);
             if (property == null)
                 throw new PropertyNotFoundReflectorException() { ErrorProperty = propertyName };
             return property;
@@ -131,7 +140,7 @@ namespace WebReflector.Reflector
 
         public ContextTypeEvent GetEvent(string eventName)
         {
-            var ev = m_events.Find(e => e.Name == eventName);
+            var ev = Events.Find(e => e.Name == eventName);
             if (ev == null)
                 throw new EventNotFoundReflectorException() { ErrorEvent = eventName };
             return ev;

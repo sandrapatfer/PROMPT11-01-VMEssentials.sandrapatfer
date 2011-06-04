@@ -40,10 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IContextEntity.cs" />
-    <Compile Include="IHandler.cs" />
-    <Compile Include="IHtmlView.cs" />
-    <Compile Include="IHtmlElement.cs" />
+    <Compile Include="Attributes\TemplateAttribute.cs" />
+    <Compile Include="Interfaces\IContextEntity.cs" />
+    <Compile Include="Interfaces\IHandler.cs" />
+    <Compile Include="Interfaces\IHtmlView.cs" />
+    <Compile Include="Interfaces\IHtmlElement.cs" />
+    <Compile Include="Interfaces\IRouter.cs" />
+    <Compile Include="Interfaces\IRoutingTemplate.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
