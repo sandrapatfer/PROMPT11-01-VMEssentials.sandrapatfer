@@ -60,6 +60,16 @@ namespace WebReflector.Reflector
                     return Name;
             }
         }
+        public string FriendlyFullName
+        {
+            get
+            {
+                if (IsRoot)
+                    return "Root";
+                else
+                    return FullName;
+            }
+        }
 
         public ContextNamespace FindOrCreateNamespace(string[] name)
         {
@@ -80,6 +90,10 @@ namespace WebReflector.Reflector
             }
         }
 
+        public ContextNamespace Find(string name)
+        {
+            return Find(name.Split('.'));
+        }
         public ContextNamespace Find(string[] name)
         {
             if (name.Count() == 0)
@@ -101,15 +115,34 @@ namespace WebReflector.Reflector
             ChildNamespaces.ForEach(n => n.OrderChilds());
             ChildNamespaces.OrderBy(n => n.Name);
 
-            Types.OrderBy(t => t.Type.Name);
+            Types.OrderBy(t => t.Name);
         }
 
         public ContextType GetType(string name)
         {
-            ContextType type = Types.Find(t => t.Type.Name == name);
+            ContextType type = Types.Find(t => t.Name == name);
             if (type == null)
                 throw new TypeNotFoundReflectorException() { ErrorType = name };
             return type;
+        }
+
+        public ContextType FindType(string name)
+        {
+            return Types.Find(t => t.Name == name);
+        }
+
+        static ContextNamespaceComparer m_comparer = new ContextNamespaceComparer();
+        public static IComparer<ContextNamespace> GetComparer()
+        {
+            return m_comparer;
+        }
+    }
+
+    internal class ContextNamespaceComparer : Comparer<ContextNamespace>
+    {
+        public override int Compare(ContextNamespace n1, ContextNamespace n2)
+        {
+            return n1.Name.CompareTo(n2.Name);
         }
     }
 }

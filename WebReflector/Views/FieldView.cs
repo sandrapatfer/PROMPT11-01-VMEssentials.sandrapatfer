@@ -16,11 +16,12 @@ namespace WebReflector
         public override HtmlNode Body()
         {
             return body(
-                h1("Field"), 
-                ul(li(string.Format("Name: {0}", m_field.Name)),
-                   li(string.Format("Type: {0}", m_field.TypeName))),
-                a("Type", m_field.Type.Uri)
+                h1(string.Format("Field of type: {0}", m_field.ParentType.Name)),
+                ul(li("Field", ul(li(string.Format("Name: {0}", m_field.Name)),
+                                  li("Type: ", a(m_field.ItemType)))),
+                   li(a("Back to Type", m_field.ParentType.Uri)))
             );
         }
     }
 }
+

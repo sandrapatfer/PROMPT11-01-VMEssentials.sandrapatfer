@@ -32,5 +32,22 @@ namespace WebReflector.Reflector
             else
                 throw new ContextNotFoundReflectorException() { ErrorContext = name };
         }
+
+        public static ContextType LookupType(string nspace, string name)
+        {
+            foreach (var key in m_contextList.Keys)
+            {
+                var ns = m_contextList[key].GetNamespace(nspace);
+                if (ns != null)
+                {
+                    var type = ns.FindType(name);
+                    if (type != null)
+                    {
+                        return type;
+                    }
+                }
+            }
+            return null;
+        }
     }
 }

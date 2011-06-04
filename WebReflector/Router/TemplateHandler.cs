@@ -22,7 +22,6 @@ namespace WebReflector
                 uriParts.ToList().ForEach(p => { if (!string.IsNullOrEmpty(p)) m_templateParts.Add(new TemplatePart(p)); });
             }
         }
-        //public IHandler Handler { get; set; }
         public T Handler { get; set; }
 
         public bool MapsTemplate(string uri)

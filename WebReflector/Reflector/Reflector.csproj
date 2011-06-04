@@ -40,15 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContextTypedItem.cs" />
+    <Compile Include="ContextTypeFuncItem.cs" />
     <Compile Include="ContextTypeItem.cs" />
+    <Compile Include="ContextTypeNotFound.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="ContextAssembly.cs" />
     <Compile Include="ContextNamespace.cs" />
     <Compile Include="ContextType.cs" />
-    <Compile Include="Exceptions\ReflectorException.cs" />
     <Compile Include="Reflector.cs" />
     <Compile Include="ReflectorException.cs" />
+    <Compile Include="ReflectorUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Contracts\Contracts.csproj">

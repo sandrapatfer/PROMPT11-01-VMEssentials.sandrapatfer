@@ -16,11 +16,11 @@ namespace WebReflector
         public override HtmlNode Body()
         {
             return body(
-                h1("Constructors"),
-                ul(m_type.Constructors.ConvertAll(c => li(
-                    c.MethodString, 
-                    ul(c.Parameters.ConvertAll(p => li(string.Format("{0}: {1}", p.Name, p.ParameterType.Name))).ToArray())
-                    )).ToArray())
+                h1(string.Format("Constructors of type: {0}", m_type.Name)),
+                ul(li("List", ul(m_type.Constructors.ConvertAll(c => 
+                            li(c.MethodString,
+                               ul(c.Parameters.ConvertAll(p => li(string.Format("{0}: ", p.Name), a(p.ItemType))).ToArray()))).ToArray())),
+                   li(a("Back to Type", m_type.Uri)))
             );
         }
     }

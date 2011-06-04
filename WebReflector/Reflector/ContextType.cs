@@ -6,15 +6,25 @@ using System.Reflection;
 
 namespace WebReflector.Reflector
 {
-    public class ContextType
+    public class ContextType : IContextEntity
     {
+        public Type m_type;
+
+        public ContextNamespace Namespace { get; set; }
+        public ContextAssembly Assembly { get; set; }
+
+        public ContextType(Type t)
+        {
+            m_type = t;
+        }
+
         List<ContextTypeField> m_fields = null;
         public List<ContextTypeField> Fields
         {
             get
             {
                 if (m_fields == null)
-                    InitList(Type.GetFields().ToList(), ref m_fields, f => new ContextTypeField() { Field = f, Type = this });
+                    InitList(m_type.GetFields(), ref m_fields, f => new ContextTypeField(f) { ParentType = this });
                 return m_fields;
             }
         }
@@ -24,7 +34,7 @@ namespace WebReflector.Reflector
             get
             {
                 if (m_properties == null)
-                    InitList(Type.GetProperties().ToList(), ref m_properties, p => new ContextTypeProperty() { Property = p, Type = this });
+                    InitList(m_type.GetProperties(), ref m_properties, p => new ContextTypeProperty(p) { ParentType = this });
                 return m_properties;
             }
         }
@@ -34,7 +44,7 @@ namespace WebReflector.Reflector
             get
             {
                 if (m_events == null)
-                    InitList(Type.GetEvents().ToList(), ref m_events, e => new ContextTypeEvent() { Event = e, Type = this });
+                    InitList(m_type.GetEvents(), ref m_events, e => new ContextTypeEvent(e) { ParentType = this });
                 return m_events;
             }
         }
@@ -44,31 +54,43 @@ namespace WebReflector.Reflector
             get
             {
                 if (m_constructors == null)
-                    InitList(Type.GetConstructors().ToList(), ref m_constructors, c => new ContextTypeConstructor() { Constructor = c, Type = this });
+                    InitList(m_type.GetConstructors(), ref m_constructors, c => new ContextTypeConstructor() { Constructor = c, Type = this });
                 return m_constructors;
             }
         }
-        List<ContextTypeMethod> m_methods = null;
-        public List<ContextTypeMethod> Methods
+
+        SortedDictionary<string, List<ContextTypeMethod>> m_methods = null;
+        public SortedDictionary<string, List<ContextTypeMethod>> Methods
         {
             get
             {
                 if (m_methods == null)
-                    InitList(Type.GetMethods().ToList(), ref m_methods, m => new ContextTypeMethod() { Method = m, Type = this });
+                {
+                    m_methods = new SortedDictionary<string, List<ContextTypeMethod>>();
+                    m_type.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic).ToList().ForEach(
+                        m =>
+                        {
+                            if (!m.IsSpecialName)
+                            {
+                                var ctx = new ContextTypeMethod() { Method = m, Type = this };
+                                if (m_methods.Keys.Contains(m.Name))
+                                    m_methods[m.Name].Add(ctx);
+                                else
+                                    m_methods.Add(m.Name, new List<ContextTypeMethod>() { ctx });
+                            }
+                        }
+                            );
+                }
                 return m_methods;
             }
         }
 
-        public Type Type { get; set; }
-
-        public ContextNamespace Namespace { get; set; }
-        public ContextAssembly Assembly { get; set; }
-
+        public string Name { get { return m_type.Name; } }
         public string Uri
         {
             get
             {
-                return string.Format(@"{0}/{1}", Namespace.Uri, Type.Name);
+                return string.Format(@"{0}/{1}", Namespace.Uri, m_type.Name);
             }
         }
         public string ConstructorsUri
@@ -79,20 +101,16 @@ namespace WebReflector.Reflector
             }
         }
 
-        void InitList<LT, NT>(List<LT> typeList, ref List<NT> newList, Converter<LT, NT> conv)
+        void InitList<LT, NT>(LT[] typeList, ref List<NT> newList, Converter<LT, NT> conv)
         {
-            if (newList == null)
-            {
-                newList = typeList.ToList().ConvertAll(conv);
-            }
+            newList = typeList.ToList().ConvertAll(conv);
         }
 
         public List<ContextTypeMethod> GetMethods(string methodName)
         {
-            var methods = Methods.FindAll(f => f.Name == methodName);
-            if (methods == null || methods.Count == 0)
+            if (!Methods.Keys.Contains(methodName))
                 throw new MethodNotFoundReflectorException() { ErrorMethod = methodName };
-            return methods;
+            return Methods[methodName];
         }
 
         public ContextTypeField GetField(string fieldName)

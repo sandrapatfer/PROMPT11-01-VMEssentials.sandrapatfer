@@ -72,7 +72,7 @@ namespace WebReflector
         public void test_register()
         {
             Reflector.Reflector.RegisterContext("v4.0", @"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0");
-            Assert.AreEqual(Reflector.Reflector.GetContext("v4.0").GetNamespace("System").GetType("Object").Type, typeof(object));
+            Assert.AreEqual(Reflector.Reflector.GetContext("v4.0").GetNamespace("System").GetType("Object").Name, typeof(object).Name);
         }
 
         [TestMethod]
@@ -81,7 +81,7 @@ namespace WebReflector
             ContextNamespace m_nspaceTree = new ContextNamespace();
 
             ContextNamespace nspace = m_nspaceTree.Find(".".Split('.'));
-            Assert.AreEqual(nspace.FullName, ".", "Find failed with object");
+            Assert.AreEqual("Root", nspace.FriendlyName, "Find failed with object");
 
             ContextNamespace nspace1 = m_nspaceTree.FindOrCreateNamespace(typeof(System.Reflection.Assembly).Namespace.Split('.'));
             Assert.AreEqual(nspace1.FullName, "System.Reflection", "FindOrCreateNamespace failed with System.Reflection.Assembly");

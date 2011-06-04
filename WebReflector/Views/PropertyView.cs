@@ -17,10 +17,10 @@ namespace WebReflector
         {
             // TODO ver o que sao parametros da propriedade
             return body(
-                h1("Property"),
-                ul(li(string.Format("Name: {0}", m_property.Name)),
-                   li(string.Format("Type: {0}", m_property.TypeName))),
-                a("Type", m_property.Type.Uri)
+                h1(string.Format("Property of type: {0}", m_property.ParentType.Name)),
+                ul(li("Property", ul(li(string.Format("Name: {0}", m_property.Name)),
+                                  li("Type: ", a(m_property.ItemType)))),
+                   li(a("Back to Type", m_property.ParentType.Uri)))
             );
         }
     }

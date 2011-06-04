@@ -17,13 +17,15 @@ namespace WebReflector
 
         public override HtmlNode Body()
         {
-            // TODO falta return type
             return body(
-                h1(string.Format("Method: {0}", m_name)),
-                ul(m_methods.ConvertAll(m => li(
-                    m.MethodString,
-                    ul(m.Parameters.ConvertAll(p => li(string.Format("{0}: {1}", p.Name, p.ParameterType.Name))).ToArray())
-                    )).ToArray())
+                h1(string.Format("Methods of type: {0}", m_methods[0].Type.Name)),
+                ul(li("Method",
+                    ul(m_methods.ConvertAll(m => li(m.MethodString,
+                        ul(li("Parameters", 
+                              ul(m.Parameters.ConvertAll(p => li(string.Format("{0}: ", p.Name), a(p.ItemType))).ToArray())),
+                           li("Returns: ", a(m.Return.ItemType))
+                        ))).ToArray())),
+                   li(a("Back to Type", m_methods[0].Type.Uri)))
             );
         }
     }

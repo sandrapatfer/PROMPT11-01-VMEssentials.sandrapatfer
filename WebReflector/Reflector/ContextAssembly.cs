@@ -9,11 +9,12 @@ namespace WebReflector.Reflector
     public class ContextAssembly : IContextEntity
     {
         Context m_context;
-        public Context Context { set { m_context = value; } }
+        public Context Context { set { m_context = value; } get { return m_context; } }
         Assembly m_assembly;
         public Assembly Assembly { set { m_assembly = value; m_name = m_assembly.GetName().Name; } }
         string m_name;
         public string Name { get { return m_name; } }
+        public string FullName { get { return m_assembly.FullName; } }
 
         List<ContextType> m_types = new List<ContextType>();
 
@@ -27,17 +28,17 @@ namespace WebReflector.Reflector
             m_types.Add(type);
         }
 
-        public SortedDictionary<string, List<string>> TypesByNamespace
+        public SortedDictionary<ContextNamespace, List<ContextType>> TypesByNamespace
         {
             get
             {
-                var dic = new SortedDictionary<string, List<string>>();
+                var dic = new SortedDictionary<ContextNamespace, List<ContextType>>(ContextNamespace.GetComparer());
                 m_types.ForEach(t =>
                 {
-                    if (dic.ContainsKey(t.Namespace.Name))
-                        dic[t.Namespace.Name].Add(t.Type.Name);
+                    if (dic.ContainsKey(t.Namespace))
+                        dic[t.Namespace].Add(t);
                     else
-                        dic.Add(t.Namespace.Name, new List<string>() { t.Type.Name });
+                        dic.Add(t.Namespace, new List<ContextType>() { t });
                 });
                 return dic;
             }

@@ -60,15 +60,13 @@ namespace WebReflector.Reflector
             m_path = path;
             m_nspaceTree = new ContextNamespace() { Context = this };
 
-            // TODO tornar este mecanismo lazy? nota que para dar a info do nspace tenho q carregar todas as assemblies
-        
             foreach(var dllFile in Directory.GetFiles(path, "*.dll"))
             {
                 try
                 {
                     var assembly = Assembly.LoadFrom(dllFile);
                     var ctxAss = new ContextAssembly() { Assembly = assembly, Context = this };
-                    assembly.GetTypes().ToList().ForEach(t => { var type = new ContextType() { Type = t }; RegisterType(type); ctxAss.RegisterType(type); });
+                    assembly.GetTypes().ToList().ForEach(t => RegisterType(t, ctxAss));
                     m_assemblies.Add(ctxAss);
                 }
                 catch
@@ -82,15 +80,17 @@ namespace WebReflector.Reflector
             m_assemblies.OrderBy(a => a.Name);
         }
 
-        void RegisterType(ContextType type)
+        void RegisterType(Type type, ContextAssembly ctxAss)
         {
+            var ctx = new ContextType(type); 
             ContextNamespace nspace;
-            if (type.Type.Namespace != null)
-                nspace = m_nspaceTree.FindOrCreateNamespace(type.Type.Namespace.Split('.'));
+            if (type.Namespace != null)
+                nspace = m_nspaceTree.FindOrCreateNamespace(type.Namespace.Split('.'));
             else
                 nspace = m_nspaceTree;
-            type.Namespace = nspace;
-            nspace.Types.Add(type);
+            ctx.Namespace = nspace;
+            nspace.Types.Add(ctx);
+            ctxAss.RegisterType(ctx);
         }
 
         public ContextAssembly GetAssembly(string name)

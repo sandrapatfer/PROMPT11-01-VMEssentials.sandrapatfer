@@ -23,7 +23,7 @@ namespace WebReflector
                 li("Namespace List",
                     ul(m_nspace.ChildNamespaces.ConvertAll(n => li(a(n))).ToArray())),
                 li("Type List",
-                    ul(m_nspace.Types.ConvertAll(t => li(a(t.Type.Name, t.Uri))).ToArray())),
+                    ul(m_nspace.Types.ConvertAll(t => li(a(t.Name, t.Uri))).ToArray())),
                 li(a("Back to List of Namespaces", m_nspace.Context.NamespaceUri))
                 );
         }

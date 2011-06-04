@@ -16,10 +16,10 @@ namespace WebReflector
         public override HtmlNode Body()
         {
             return body(
-                h1("Event"),
-                ul(li(string.Format("Name: {0}", m_event.Name)),
-                   li(string.Format("Type: {0}", m_event.TypeName))),
-                a("Type", m_event.Type.Uri)
+                h1(string.Format("Event of type: {0}", m_event.ParentType.Name)),
+                ul(li("Event", ul(li(string.Format("Name: {0}", m_event.Name)),
+                                  li("Type: ", a(m_event.ItemType)))),
+                   li(a("Back to Type", m_event.ParentType.Uri)))
             );
         }
     }
